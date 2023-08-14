@@ -31,5 +31,6 @@ int main(int argc, char **argv)
 	free(user_input);
 	free(seperators);
 	free(cmd_list);
+
 	return (0);
 }
