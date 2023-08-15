@@ -14,12 +14,7 @@ typedef struct cmd
 {
 	char *name;
 	char **arguments;
-} cmd;
-
-typedef struct cmd_node
-{
-	cmd *command;
 	cmd *next;
-} cmd_node;
+} cmd;
 
 #endif
