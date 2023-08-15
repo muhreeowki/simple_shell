@@ -1,11 +1,9 @@
 #include "shell.h"
 
 
-void executor(cmd **cmd_list , char *separator , char **environ)
+void executor(cmd **head , char **environ)
 {
-	cmd *head;
-	cmd *curr;
-	curr = head;
+	cmd *curr = *head;
 	while(curr != NULL)
 	{
 		pid_t pid = fork();

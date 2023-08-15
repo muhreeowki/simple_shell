@@ -14,8 +14,8 @@ typedef struct cmd
 {
 	char *name;
 	char **arguments;
-	cmd *next;
+	struct cmd *next;
 } cmd;
-void executor(cmd **cmd_list , char *separator,char **environ);
-cmd **parser(char *input, char *seperators);
+void executor(cmd **head ,char **environ);
+cmd **parser(char *input);
 #endif
