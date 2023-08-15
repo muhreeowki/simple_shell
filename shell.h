@@ -17,6 +17,7 @@ typedef struct cmd
 	char *name;
 	char **arguments;
 	struct cmd *next;
+	char separator = '\0';
 } cmd;
 
 void executor(cmd **head);

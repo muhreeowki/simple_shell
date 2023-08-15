@@ -7,9 +7,9 @@ cmd **parser(char *input)
 	cmd *new_cmd;
 	cmd **head = NULL;
 
-	/* Tokenization */
+	/* function tokenization() - splits command into list of arguments and return list of args */
 
-	/* count args */
+	/* function count_args() */
 	while (input[i] != '\0')
 	{
 		if (input[i] == ' ')
@@ -21,10 +21,11 @@ cmd **parser(char *input)
 	arguments_list = malloc(sizeof(char *) * (count + 1));
 	if (arguments_list == NULL)
 	{
-		perror("Memory allocation error\n");
+		perror(NULL);
 		return (NULL);
 	}
 
+	/* function _strtok() */
 	/* get command name */
 	arguments_list[0] = strtok(input, " ");
 
@@ -33,16 +34,24 @@ cmd **parser(char *input)
 	{
 		arguments_list[i] = strtok(NULL, " ");
 
-		/* TODO: Check for seperators and logical opperators and append them to the seperators list */
-		/* TODO: if seperators are found, Repeat until we find all the commands. */
 	}
 
+	/* TODO: Check for seperators and logical opperators and append them to the seperators list */
+	/* TODO: if seperators are found, Repeat until we find all the commands. */
+
+	/* function find_program() */
+	/* check if program exists 
+
+	if (find_program(arguments_list[0]))
+
+	*/
 
 	/* Initialization of command */
+	/* function append_node() */
 	new_cmd = malloc(sizeof(cmd));
 	if (new_cmd == NULL)
 	{
-		perror("Memory allocation error\n");
+		perror(NULL);
 		/* TODO: Free the arguments list */
 		return (NULL);
 	}
