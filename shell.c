@@ -4,7 +4,8 @@
 int main(void)
 {
 	extern char **environ;
-	char *user_input = malloc(sizeof(char) * MAX_INPUT_SIZE);
+	size_t size = MAX_INPUT_SIZE;
+	char *user_input = malloc(sizeof(char) * size);
 	cmd **cmd_list;
 	int i;
 	while (1)
@@ -12,8 +13,8 @@ int main(void)
 		write(STDOUT_FILENO, "$ ", 2); /*Prompt*/
 
 		/* Get input*/
-		if(getline(&user_input, (size_t *)MAX_INPUT_SIZE, stdin) == -1)
-			continue;
+		if(getline(&user_input, &size, stdin) == -1)
+			return(0);
 		user_input[strcspn(user_input, "\n")] = '\0'; /*remove new line at end*/
 
 		/* call parser*/
