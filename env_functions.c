@@ -16,3 +16,8 @@ char *_getenv(char *var)
 	/* return NULL if we dont find anything */
 	return (NULL);
 }
+
+/*
+   _setenv
+   _unsetenv
+*/

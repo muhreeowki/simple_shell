@@ -21,5 +21,5 @@ typedef struct cmd
 } cmd;
 
 void executor(cmd **head);
-cmd **parser(char *input);
+cmd **parser(char *input, char **paths);
 #endif

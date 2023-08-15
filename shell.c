@@ -25,7 +25,8 @@ int main(void)
 		user_input[strcspn(user_input, "\n")] = '\0'; /*remove new line at end*/
 
 		/* call parser*/
-		cmd_list = parser(user_input);
+		cmd_list = parser(user_input, paths);
+
 		if (cmd_list == NULL)
 			perror("");
 
