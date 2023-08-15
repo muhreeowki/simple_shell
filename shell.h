@@ -16,5 +16,6 @@ typedef struct cmd
 	char **arguments;
 	cmd *next;
 } cmd;
-
+void executor(cmd **cmd_list , char *separator,char **environ);
+cmd **parser(char *input, char *seperators);
 #endif

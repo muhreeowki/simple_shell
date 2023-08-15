@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 
 		// Get input
 		if(getline(&user_input, MAX_INPUT_SIZE) == -1)
-			return (0);
+			continue;
 
 		user_input[strcspn(user_input, "\n")] = '\0'; //remove new line at end
 
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 			perror("");
 
 		// executor
-		executor (cmd_list, seperators);
+		executor (cmd_list, seperators,environ);
 	}
 
 
