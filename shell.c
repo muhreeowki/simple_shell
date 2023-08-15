@@ -3,18 +3,22 @@
 
 int main(void)
 {
-	extern char **environ;
 	size_t size = MAX_INPUT_SIZE;
 	char *user_input = malloc(sizeof(char) * size);
 	cmd **cmd_list;
+	char nl = '\n';
 	int i;
+
 	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2); /*Prompt*/
 
 		/* Get input*/
 		if(getline(&user_input, &size, stdin) == -1)
+		{
+			write(STDOUT_FILENO, &nl, 1);
 			return(0);
+		}
 		user_input[strcspn(user_input, "\n")] = '\0'; /*remove new line at end*/
 
 		/* call parser*/
@@ -23,7 +27,7 @@ int main(void)
 			perror("");
 
 		/* executor*/
-		executor (cmd_list,environ);
+		executor (cmd_list);
 	}
 
 

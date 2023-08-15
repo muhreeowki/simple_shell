@@ -10,12 +10,15 @@
 
 #define MAX_INPUT_SIZE 1024
 
+extern char **environ;
+
 typedef struct cmd
 {
 	char *name;
 	char **arguments;
 	struct cmd *next;
 } cmd;
-void executor(cmd **head ,char **environ);
+
+void executor(cmd **head);
 cmd **parser(char *input);
 #endif
