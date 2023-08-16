@@ -93,8 +93,8 @@ cmd **append_cmd(cmd **head, char *cmdname, char **arguments)
 	new->arguments = arguments;
 	new->next = NULL;
 
-	if (*head == NULL)
-		*head = new;
+	if (head == NULL || *head == NULL)
+		head = &new;
 	else
 	{
 		cmd *curr = *head;

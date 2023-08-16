@@ -3,9 +3,8 @@
 cmd **parser(char *input, char **paths)
 {
 	char **arguments_list;
-	cmd **head , *new_cmd = NULL;
+	cmd **head = NULL;
 	char *cmd_name;	
-	head = &new_cmd;
 
 	/* function tokenization() - splits command into list of arguments and return list of args */
 	arguments_list = tokenize(input, ' ');
