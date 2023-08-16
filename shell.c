@@ -7,7 +7,6 @@ int main(void)
 	char **paths;
 	cmd **cmd_list;
 	char nl = '\n';
-	int i;
 
 	while (1)
 	{
@@ -15,43 +14,29 @@ int main(void)
 
 		write(STDOUT_FILENO, "$ ", 2); /*Prompt*/
 
-		/* Get input*/
+		/* Get user input */
 		if(getline(&user_input, &size, stdin) == -1)
 		{
+			/* exit */
 			write(STDOUT_FILENO, &nl, 1);
+			free(user_input);
+			/* Create a function to FREE the cmdlist (linked list) and all the commands inside it */
 			return(0);
 		}
 
-		user_input[strcspn(user_input, "\n")] = '\0'; /*remove new line at end*/
+		user_input[strcspn(user_input, "\n")] = '\0'; /* Create remove_nl function */
 
-		/* call parser*/
+		/* Parser */
 		cmd_list = parser(user_input, paths);
 
 		if (cmd_list == NULL)
-			perror("");
+		{
+			perror(NULL);
+			continue;
+		}
 
-		/* executor*/
-		executor (cmd_list);
+		executor(cmd_list);
 	}
-
-	free(user_input);
-	for (i = 0; cmd_list[i] != NULL; i++)
-	{
-		free(cmd_list[i]->arguments);
-		free(cmd_list[i]);
-	}
-
-	free(cmd_list);
 
 	return (0);
-}
-
-
-/* Get the PATH and divide it into a list. */
-char **get_paths(void)
-{
-	char *path_string = _getenv("PATH");
-	char **paths = tokenize(path_string, ':'); /* TO BE CREATED */
-
-	return (paths);
 }

@@ -1,11 +1,13 @@
 #include "shell.h"
 
 
+/* function to execute a list of commands */
 void executor(cmd **head)
 {
 	int status;
 	cmd *curr = *head;
 
+	/* TODO: Add multiple executor sub functions to handle different separators and logicall operations */
 	while(curr != NULL)
 	{
 		pid_t pid = fork();
@@ -24,9 +26,8 @@ void executor(cmd **head)
 			}
 		}
 		else
-		{
 			wait(&status);
-		}
+
 		curr = curr->next;
 	}
 }

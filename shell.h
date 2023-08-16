@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -17,9 +18,18 @@ typedef struct cmd
 	char *name;
 	char **arguments;
 	struct cmd *next;
-	char separator = '\0';
+	char separator;
 } cmd;
 
 void executor(cmd **head);
 cmd **parser(char *input, char **paths);
+int find_program(char *name, char **paths);
+char **tokenize(char *input, char delim);
+int count_tokens(char *input, char delim);
+cmd **append_cmd(cmd **head, char *cmdname, char **arguments);
+int _strcmp(char *s1, char *s2);
+char **get_paths(void);
+char *_getenv(char *var);
+char *_strcat(char *s1, char *s2);
+
 #endif

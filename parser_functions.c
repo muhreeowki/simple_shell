@@ -4,16 +4,24 @@
 /* Checks if a program exists or not */
 int find_program(char *name, char **paths)
 {
-	int i, count;
+	int i;
 	char *filepath;
+	struct stat st;
 
 	/* 2. loop through the list of paths searching for the name */
 
 	for (i = 0; paths[i] != NULL; i++)
 	{
-		filepath = _strcat(paths[i], name); /* TO BE CREATED */
-		if (stat(filepath) == 0)
+		filepath = _strcat(paths[i], _strcat("/", name));
+
+		if (stat(filepath, &st) == 0)
+		{
+			printf("%s\n", filepath);
 			return (0);
+		}
+
+		else 
+			continue;
 	}
 
 	/* 3. Return 0 on succes and -1 on failur. */
@@ -24,10 +32,15 @@ int find_program(char *name, char **paths)
 
 
 /* function tokenization() - splits command into list of arguments and return list of args */
-char **tokenize(char *input)
+char **tokenize(char *input, const char delim)
 {
+	int i, count;
+	char **arguments_list;
 
-	/* 3 */
+	/* Count number of tokens */
+	count = count_tokens(input, delim);
+
+	/* allocate memory */
 	arguments_list = malloc(sizeof(char *) * (count + 1));
 	if (arguments_list == NULL)
 	{
@@ -37,14 +50,11 @@ char **tokenize(char *input)
 
 	/* function _strtok() */
 	/* get command name */
-	arguments_list[0] = strtok(input, " ");
+	arguments_list[0] = strtok(input, &delim);
 
 	/* split the arguments into the string */
-	for (i = 1; i <= count; i++)
-	{
-		arguments_list[i] = strtok(NULL, " ");
-
-	}
+	for (i = 1; i < count; i++)
+		arguments_list[i] = strtok(NULL, &delim); /* CREATE OUR OWN strtok function */
 
 	return (arguments_list);
 }
@@ -53,17 +63,47 @@ char **tokenize(char *input)
 
 
 /* function to count number of tokens in a string */
-int count_tokens(char *input)
+int count_tokens(char *input, char delim)
 {
-	int i = 1;
+	int i, count = 1;
 
-	while (input[i] != '\0')
+	for (i = 0; input[i] != '\0'; i++)
 	{
-		if (input[i] == ' ')
+		if (input[i] == delim)
 			count++;
-		i++;
 	}
+
+	return (count);
 }
 
 
+/* funtion to append a command to a linked list of commands */
+cmd **append_cmd(cmd **head, char *cmdname, char **arguments)
+{
+	cmd *new = malloc(sizeof(cmd));
+
+	if (new == NULL)
+	{
+		perror(NULL);
+		return (NULL);
+	}
+
+	new->name = cmdname;
+	new->arguments = arguments;
+	new->next = NULL;
+
+	if (*head == NULL)
+		*head = new;
+	else
+	{
+		cmd *curr = *head;
+
+		while (curr->next)
+			curr = curr->next;
+
+		curr->next = new;
+	}
+
+	return(head);
+}
 
