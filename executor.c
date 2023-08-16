@@ -8,13 +8,11 @@ void executor(cmd **head)
 	cmd *curr = *head;
 
 	/* TODO: Add multiple executor sub functions to handle different separators and logicall operations */
-	printf("command name: %s\n1st argument: %s\n", curr->name, curr->arguments[0]);
 
 	while(curr != NULL)
 	{
 		pid_t pid = fork();
 
-		printf("command name: %s\n1st argument: %s\n", curr->name, curr->arguments[0]);
 		if (pid < 0)
 		{
 			perror(NULL);

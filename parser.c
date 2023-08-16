@@ -22,29 +22,11 @@ cmd **parser(char *input, char **paths)
 	if (cmd_name == NULL)
 		return (NULL);
 
-
 	/* Initialization of command */
 	/* function append_node() */
 	/* Append command to commands list */
 	arguments_list[0] = cmd_name;
-	append_cmd(head, arguments_list[0], arguments_list);
-
-	/*
-	new_cmd = malloc(sizeof(cmd));
-	if (new_cmd == NULL)
-	{
-		perror(NULL);
-		TODO: Free the arguments list 
-		return (NULL);
-	}
-	new_cmd->name = arguments_list[0];
-	new_cmd->arguments = arguments_list;
-	new_cmd->next = NULL;
-
-	head = &new_cmd;
-	*/
-
-	printf("parser done\n");
+	head = append_cmd(head, arguments_list[0], arguments_list);
 
 	return (head);
 }

@@ -3,24 +3,34 @@
 int main(void)
 {
 	size_t size = MAX_INPUT_SIZE;
-	char *user_input = malloc(sizeof(char) * size);
+	char *user_input;
 	char **paths;
 	cmd **cmd_list;
 	char nl = '\n';
 	
 	while (1)
 	{
+		user_input = malloc(sizeof(char) * size);
+		if (user_input == NULL)
+		{
+			perror(NULL);
+			return(-1);
+		}
+
+		/* get env variabls */
 		paths = get_paths();
 
-		write(STDOUT_FILENO, "$ ", 2); /*Prompt*/
+		/* Prompt */
+		write(STDOUT_FILENO, "$ ", 2);
 
 		/* Get user input */
 		if(getline(&user_input, &size, stdin) == -1)
 		{
 			/* exit */
 			write(STDOUT_FILENO, &nl, 1);
-			free(user_input);
 			/* Create a function to FREE the cmdlist (linked list) and all the commands inside it */
+			free(user_input);
+			free_cmdlist(cmd_list);
 			return(0);
 		}
 
@@ -31,11 +41,38 @@ int main(void)
 
 		if (cmd_list == NULL)
 		{
-			perror(NULL);
+			perror("parser");
 			continue;
 		}
 
 		executor(cmd_list);
+
+		free(user_input);
 	}
 	return (0);
+}
+
+
+/**
+ * free_listint - frees a linked list
+ *
+ * @head: pointer to the head of the linked list
+ *
+ * Return: nothing.
+ */
+void free_cmdlist(cmd **head)
+{
+	cmd *ptr = *head;
+	cmd *next;
+
+	if (head == NULL)
+		return;
+
+	while (ptr)
+	{
+		next = ptr->next;
+		free(ptr->arguments);
+		free(ptr);
+		ptr = next;
+	}
 }

@@ -8,6 +8,7 @@ char *find_program(char *name, char **paths)
 	char *filepath;
 	struct stat st;
 
+	/* 1. check if the users inputed a filepath */
 	if (stat(name, &st) == 0)
 		return (name);
 
@@ -15,11 +16,10 @@ char *find_program(char *name, char **paths)
 	for (i = 0; paths[i] != NULL; i++)
 	{
 		filepath = _strcat(paths[i], _strcat("/", name));
+		printf("find: %s\n", filepath);
 
 		if (stat(filepath, &st) == 0)
-		{
 			return (filepath);
-		}
 
 		else 
 			continue;
@@ -28,7 +28,6 @@ char *find_program(char *name, char **paths)
 	/* 3. Return 0 on succes and -1 on failur. */
 	return (NULL);
 }
-
 
 
 
