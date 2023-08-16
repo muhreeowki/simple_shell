@@ -33,7 +33,8 @@ int main(void)
 		/* get env variabls */
 		paths = get_paths();
 
-		user_input[strcspn(user_input, "\n")] = '\0'; /* Create remove_nl function */
+	/*	user_input[strcspn(user_input, "\n")] = '\0'; / Create remove_nl function */
+		remove_nl(user_input);
 		if (*user_input == '\0')
 			continue;
 
@@ -78,5 +79,32 @@ void free_cmdlist(cmd *head)
 		free(ptr->arguments);
 		free(ptr);
 		ptr = next;
+	}
+}
+/**
+ * remove_nl - Remove newline character and terminate string.
+ *
+ * @input: Input string to process.
+ *
+ * Return: nothing
+ */
+void remove_nl(char *input) 
+{
+	int length = 0;
+	int i;
+	/* Calculate the length of the input string*/
+	while (input[length] != '\0') 
+	{
+		length++;
+	}
+
+    /* Find the newline character and replace it with null terminator*/
+	for (i = 0; i < length; i++) 
+	{
+		if (input[i] == '\n') 
+		{
+			input[i] = '\0';
+			break;
+		}
 	}
 }

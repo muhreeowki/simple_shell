@@ -18,7 +18,7 @@ typedef struct cmd
 	char *name;
 	char **arguments;
 	struct cmd *next;
-	char separator;
+	char *separator;
 } cmd;
 
 void executor(cmd *head);
@@ -33,7 +33,7 @@ char *_getenv(char *var);
 char *_strcat(char *s1, char *s2);
 void free_cmdlist(cmd *head);
 char *_strdup(char *str);
-
+void remove_nl(char *input);
 
 void print_cmd(cmd *head);
 #endif
