@@ -8,8 +8,10 @@ char *find_program(char *name, char **paths)
 	char *filepath;
 	struct stat st;
 
-	/* 2. loop through the list of paths searching for the name */
+	if (stat(name, &st) == 0)
+		return (name);
 
+	/* 2. loop through the list of paths searching for the name */
 	for (i = 0; paths[i] != NULL; i++)
 	{
 		filepath = _strcat(paths[i], _strcat("/", name));

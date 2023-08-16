@@ -32,4 +32,6 @@ char **get_paths(void);
 char *_getenv(char *var);
 char *_strcat(char *s1, char *s2);
 
+
+void print_cmd(cmd **head);
 #endif

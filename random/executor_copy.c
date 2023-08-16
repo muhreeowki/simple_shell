@@ -6,26 +6,27 @@ void executor(cmd **head)
 {
 	int status;
 	cmd *curr = *head;
+	pid_t pid;
 
 	/* TODO: Add multiple executor sub functions to handle different separators and logicall operations */
 	while(curr != NULL)
 	{
-		pid_t pid = fork();
+		pid = fork();
 
 		if (pid == -1)
 		{
-			perror(NULL);
+			perror("fork");
 			exit(1);
 		}
 		else if (pid == 0)
 		{
 			execve(curr->name, curr->arguments, environ);
-			perror(NULL);
+			perror("execve");
 			exit(1);
 		}
-		else
-			wait(&status);
 
 		curr = curr->next;
 	}
+
+	waitpid(pid, &status, 0);
 }
