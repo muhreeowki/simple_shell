@@ -19,6 +19,7 @@ void executor(cmd **head)
 		}
 		else if (pid == 0)
 		{
+			printf("command name: %s\n1st argument: %s\n", curr->name, curr->arguments[0]);
 			if (execve(curr->name, curr->arguments, environ) == -1)
 			{
 				perror(NULL);

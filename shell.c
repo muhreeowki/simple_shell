@@ -7,7 +7,7 @@ int main(void)
 	char **paths;
 	cmd **cmd_list;
 	char nl = '\n';
-
+	
 	while (1)
 	{
 		paths = get_paths();
@@ -37,6 +37,5 @@ int main(void)
 
 		executor(cmd_list);
 	}
-
 	return (0);
 }

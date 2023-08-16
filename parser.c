@@ -3,7 +3,9 @@
 cmd **parser(char *input, char **paths)
 {
 	char **arguments_list;
-	cmd **head = NULL;
+	cmd **head , *new_cmd = NULL;
+	char *cmd_name;	
+	head = &new_cmd;
 
 	/* function tokenization() - splits command into list of arguments and return list of args */
 	arguments_list = tokenize(input, ' ');
@@ -16,14 +18,16 @@ cmd **parser(char *input, char **paths)
 
 	/* find_program(arguments_list[0], paths); */
 
-	if (find_program(arguments_list[0], paths) == -1)
+
+	cmd_name = find_program(arguments_list[0], paths);
+	if (cmd_name == NULL)
 		return (NULL);
 
 
 	/* Initialization of command */
 	/* function append_node() */
 	/* Append command to commands list */
-
+	arguments_list[0] = cmd_name;
 	append_cmd(head, arguments_list[0], arguments_list);
 
 	/*

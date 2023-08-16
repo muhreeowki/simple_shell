@@ -23,7 +23,7 @@ typedef struct cmd
 
 void executor(cmd **head);
 cmd **parser(char *input, char **paths);
-int find_program(char *name, char **paths);
+char *find_program(char *name, char **paths);
 char **tokenize(char *input, char delim);
 int count_tokens(char *input, char delim);
 cmd **append_cmd(cmd **head, char *cmdname, char **arguments);

@@ -2,7 +2,7 @@
 
 
 /* Checks if a program exists or not */
-int find_program(char *name, char **paths)
+char *find_program(char *name, char **paths)
 {
 	int i;
 	char *filepath;
@@ -16,8 +16,7 @@ int find_program(char *name, char **paths)
 
 		if (stat(filepath, &st) == 0)
 		{
-			printf("%s\n", filepath);
-			return (0);
+			return (filepath);
 		}
 
 		else 
@@ -25,7 +24,7 @@ int find_program(char *name, char **paths)
 	}
 
 	/* 3. Return 0 on succes and -1 on failur. */
-	return (-1);
+	return (NULL);
 }
 
 
