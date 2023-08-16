@@ -36,6 +36,7 @@ char **tokenize(char *input, const char delim)
 {
 	int i, count;
 	char **arguments_list;
+	char *string = _strdup(input);
 
 	/* Count number of tokens */
 	count = count_tokens(input, delim);
@@ -50,7 +51,7 @@ char **tokenize(char *input, const char delim)
 
 	/* function _strtok() */
 	/* get command name */
-	arguments_list[0] = strtok(input, &delim);
+	arguments_list[0] = strtok(string, &delim);
 
 	/* split the arguments into the string */
 	for (i = 1; i < count; i++)
@@ -78,7 +79,7 @@ int count_tokens(char *input, char delim)
 
 
 /* funtion to append a command to a linked list of commands */
-cmd **append_cmd(cmd **head, char *cmdname, char **arguments)
+cmd *append_cmd(cmd *head, char *cmdname, char **arguments)
 {
 	cmd *new = malloc(sizeof(cmd));
 
@@ -92,11 +93,11 @@ cmd **append_cmd(cmd **head, char *cmdname, char **arguments)
 	new->arguments = arguments;
 	new->next = NULL;
 
-	if (head == NULL || *head == NULL)
-		head = &new;
+	if (head == NULL)
+		head = new;
 	else
 	{
-		cmd *curr = *head;
+		cmd *curr = head;
 
 		while (curr->next)
 			curr = curr->next;

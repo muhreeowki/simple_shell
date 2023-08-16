@@ -7,10 +7,10 @@ print_listint - Prints integer elements of a listint_t list.
 Return: Number of nodes in the list.
 */
 
-void print_cmd(cmd **head)
+void print_cmd(cmd *head)
 {
     int i;
-    cmd *h = *head;
+    cmd *h = head;
 
     while (h != NULL)
     {

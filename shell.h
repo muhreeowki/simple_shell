@@ -21,18 +21,19 @@ typedef struct cmd
 	char separator;
 } cmd;
 
-void executor(cmd **head);
-cmd **parser(char *input, char **paths);
+void executor(cmd *head);
+cmd *parser(char *input, char **paths);
 char *find_program(char *name, char **paths);
 char **tokenize(char *input, char delim);
 int count_tokens(char *input, char delim);
-cmd **append_cmd(cmd **head, char *cmdname, char **arguments);
+cmd *append_cmd(cmd *head, char *cmdname, char **arguments);
 int _strcmp(char *s1, char *s2);
 char **get_paths(void);
 char *_getenv(char *var);
 char *_strcat(char *s1, char *s2);
-void free_cmdlist(cmd **head);
+void free_cmdlist(cmd *head);
+char *_strdup(char *str);
 
 
-void print_cmd(cmd **head);
+void print_cmd(cmd *head);
 #endif

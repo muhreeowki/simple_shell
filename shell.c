@@ -5,7 +5,7 @@ int main(void)
 	size_t size = MAX_INPUT_SIZE;
 	char *user_input;
 	char **paths;
-	cmd **cmd_list;
+	cmd *head;
 	char nl = '\n';
 	
 	while (1)
@@ -30,25 +30,29 @@ int main(void)
 			write(STDOUT_FILENO, &nl, 1);
 			/* Create a function to FREE the cmdlist (linked list) and all the commands inside it */
 			free(user_input);
-			free_cmdlist(cmd_list);
+			free_cmdlist(head);
 			return(0);
 		}
 
 		user_input[strcspn(user_input, "\n")] = '\0'; /* Create remove_nl function */
 
 		/* Parser */
-		cmd_list = parser(user_input, paths);
+		head = parser(user_input, paths);
 
-		if (cmd_list == NULL)
+		if (head == NULL)
 		{
 			perror("parser");
 			continue;
 		}
 
-		executor(cmd_list);
+		printf("%s\n", user_input);
+
+		executor(head);
 
 		free(user_input);
+		free_cmdlist(head);
 	}
+
 	return (0);
 }
 
@@ -60,9 +64,9 @@ int main(void)
  *
  * Return: nothing.
  */
-void free_cmdlist(cmd **head)
+void free_cmdlist(cmd *head)
 {
-	cmd *ptr = *head;
+	cmd *ptr = head;
 	cmd *next;
 
 	if (head == NULL)

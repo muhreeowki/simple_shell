@@ -1,9 +1,9 @@
 #include "shell.h"
 
-cmd **parser(char *input, char **paths)
+cmd *parser(char *input, char **paths)
 {
 	char **arguments_list;
-	cmd **head = NULL;
+	cmd *head = NULL;
 	char *cmd_name;	
 
 	/* function tokenization() - splits command into list of arguments and return list of args */
