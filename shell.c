@@ -17,9 +17,6 @@ int main(void)
 			return(-1);
 		}
 
-		/* get env variabls */
-		paths = get_paths();
-
 		/* Prompt */
 		write(STDOUT_FILENO, "$ ", 2);
 
@@ -32,6 +29,9 @@ int main(void)
 			free(user_input);
 			return(0);
 		}
+
+		/* get env variabls */
+		paths = get_paths();
 
 		user_input[strcspn(user_input, "\n")] = '\0'; /* Create remove_nl function */
 		if (*user_input == '\0')
@@ -50,6 +50,7 @@ int main(void)
 
 		free(user_input);
 		free_cmdlist(head);
+		free(paths);
 	}
 
 	return (0);
