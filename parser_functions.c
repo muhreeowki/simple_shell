@@ -16,7 +16,6 @@ char *find_program(char *name, char **paths)
 	for (i = 0; paths[i] != NULL; i++)
 	{
 		filepath = _strcat(paths[i], _strcat("/", name));
-		printf("find: %s\n", filepath);
 
 		if (stat(filepath, &st) == 0)
 			return (filepath);

@@ -30,17 +30,12 @@ int main(void)
 			write(STDOUT_FILENO, &nl, 1);
 			/* Create a function to FREE the cmdlist (linked list) and all the commands inside it */
 			free(user_input);
-			if (head != NULL)
-			{
-				
-				free_cmdlist(head);
-			
-			}
-			
 			return(0);
 		}
 
 		user_input[strcspn(user_input, "\n")] = '\0'; /* Create remove_nl function */
+		if (*user_input == '\0')
+			continue;
 
 		/* Parser */
 		head = parser(user_input, paths);
@@ -50,8 +45,6 @@ int main(void)
 			perror("parser");
 			continue;
 		}
-
-		printf("%s\n", user_input);
 
 		executor(head);
 
