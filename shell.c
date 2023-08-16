@@ -5,7 +5,7 @@ int main(void)
 	size_t size = MAX_INPUT_SIZE;
 	char *user_input;
 	char **paths;
-	cmd *head;
+	cmd *head = NULL;
 	char nl = '\n';
 	
 	while (1)
@@ -30,7 +30,13 @@ int main(void)
 			write(STDOUT_FILENO, &nl, 1);
 			/* Create a function to FREE the cmdlist (linked list) and all the commands inside it */
 			free(user_input);
-			free_cmdlist(head);
+			if (head != NULL)
+			{
+				
+				free_cmdlist(head);
+			
+			}
+			
 			return(0);
 		}
 
