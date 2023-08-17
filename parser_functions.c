@@ -37,7 +37,7 @@ char **tokenize(char *input, const char delim)
 	char *string = _strdup(input);
 
 	/* Count number of tokens */
-	count = count_tokens(input, delim);
+	count = count_tokens(string, delim);
 
 	/* allocate memory */
 	arguments_list = malloc(sizeof(char *) * (count + 1));
@@ -51,7 +51,7 @@ char **tokenize(char *input, const char delim)
 	arguments_list[0] = strtok(string, &delim);
 
 	/* split the arguments into the string */
-	for (i = 1; i < count; i++)
+	for (i = 1; i <= count; i++)
 		arguments_list[i] = strtok(NULL, &delim); /* CREATE OUR OWN strtok function */
 
 	return (arguments_list);
@@ -90,7 +90,7 @@ cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep)
 	new->next = NULL;
 
 	if (head == NULL)
-		head = new;
+		return (new);
 	else
 	{
 		cmd *curr = head;
@@ -99,8 +99,8 @@ cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep)
 			curr = curr->next;
 
 		curr->next = new;
+
+		return(head);
 	}
 
-	return(head);
 }
-

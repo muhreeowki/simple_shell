@@ -24,8 +24,16 @@ typedef struct cmd
 	struct cmd *next;
 } cmd;
 
+/*
+typedef struct arg
+{
+	char *val;
+	arg *next;
+} arg;
+*/
+
 /* parser functions */
-cmd *parser(char *input, char **paths);
+cmd *parser(char *input);
 char *find_program(char *name, char **paths);
 char **tokenize(char *input, char delim);
 cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep);

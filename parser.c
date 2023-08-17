@@ -3,52 +3,99 @@
 /* TODO: Check for seperators and logical opperators and append them to the seperators list */
 /* TODO: if seperators are found, Repeat until we find all the commands. */
 
-cmd *parser(char *input, char **paths)
+cmd *parser(char *input)
 {
-	char **arguments_list;
 	cmd *head = NULL;
-	char *cmd_name;	
-	char **tokens;
-	int i;
+	char **arguments, **tokens, *separator;
+	int i = 0, start = 0;
 
 	/* function tokenization() - splits command into list of arguments and return list of args */
 	tokens = tokenize(input, ' ');
+	printf("token[0]: %s\n", tokens[0]);
 
-	while (tokens != NULL)
+	/* repeate until all commands have been collected */
+	while(1)
 	{
-		for (i = 0; tokens[i] != NULL; i++)
+		arguments = (tokens + start); 
+		/* loop through the list of tokens */
+		while (tokens[i] != NULL)
 		{
-			if (tokens[i][0] == ';' || (tokens[i][0] == '&' && tokens[i][1] == '&') || (tokens[i][0] == '|' && tokens[i][1] == '|'))
+			/* Find the end of a command (a separator) */
+			if ((tokens[i][0] == ';' || (tokens[i][0] == '&' && tokens[i][1] == '&') || 
+				(tokens[i][0] == '|' && tokens[i][1] == '|')))
 			{
-				separator = tokens[i];
-				tokens = tokens[i+1];
+				separator = _strdup(tokens[i]); /* duplicate the separator and store it in a var */
+				tokens[i] = NULL; /* replace separator with NULL */
+				head = append_cmd(head, arguments[0], arguments, separator); /* Append command to commands list */
+				i++;
+				start = i;
 				break;
 			}
+			i++;
 		}
-		
-		
-		/* Append command to commands list */
-		arguments_list[0] = cmd_name;
-		head = append_cmd(head, arguments_list[0], arguments_list);
+
+		if (tokens && tokens[i] == NULL)
+		{
+			head = append_cmd(head, arguments[0], arguments, separator); /* Append command to commands list */
+			break;
+		}
 	}
-
-
-
-
-
-
-
-
-
-
-	/* check if program exists */
-	cmd_name = find_program(arguments_list[0], paths);
-	if (cmd_name == NULL)
-		return (NULL);
-
-	/* Append command to commands list */
-	arguments_list[0] = cmd_name;
-	head = append_cmd(head, arguments_list[0], arguments_list);
 
 	return (head);
 }
+
+
+
+/* PARSER 1
+#include "shell.h"
+
+
+
+cmd *parser(char *input)
+{
+	cmd *head = NULL;
+	char **arguments, **tokens, *separator;
+	int j = 0, i = 0, flag = 1, count = 0, start;
+
+	while(1)
+	{
+		start = i;
+		count = 0;
+		flag = 1; 
+
+		while (tokens[i] != NULL)
+		{
+			if ((tokens[i][0] == ';' || (tokens[i][0] == '&' && tokens[i][1] == '&') || 
+				(tokens[i][0] == '|' && tokens[i][1] == '|')) && flag == 0)
+			{
+
+				arguments = malloc(sizeof(char *) * count + 1);
+				if (arguments == NULL)
+					return (NULL);
+				for (j = 0; start < count; j++, start++)
+				{
+					printf("%s\n", tokens[start]);
+					arguments[j] = tokens[start];
+				}
+
+				arguments[j] = NULL;
+
+				separator = _strdup(tokens[i]); 
+
+				head = append_cmd(head, arguments[0], arguments, separator);
+
+				i++;
+				break;
+			}
+
+			flag = 0;
+			count++;
+			i++;
+		}
+		if (tokens[i] == NULL)
+			break;
+	}
+
+	return (head);
+}
+*/

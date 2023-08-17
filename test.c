@@ -10,16 +10,16 @@ Return: Number of nodes in the list.
 void print_cmd(cmd *head)
 {
     int i;
-    cmd *h = head;
+    cmd *curr = head;
 
-    while (h != NULL)
+    while (curr)
     {
-        printf("name: %s\n", h->name);
+        printf("name: %s\n", curr->name);
 
-	for (i = 0; h->arguments[i] != NULL; i++)
-        	printf("arg[%d]: %s\n\n", i, h->name);
+	for (i = 0; curr->arguments[i] != NULL; i++)
+        	printf("arg[%d]: %s\n", i, curr->arguments[i]);
 
-        h = h->next;
+        curr = curr->next;
     }
-
+    printf("\n");
 }

@@ -34,7 +34,7 @@ int main(void)
 		if (*user_input == '\0')
 			continue;
 
-		head = parser(user_input, paths); /* Parse user input into a command */
+		head = parser(user_input); /* Parse user input into a command */
 
 		if (head == NULL)
 		{
@@ -42,7 +42,11 @@ int main(void)
 			continue;
 		}
 
+		print_cmd(head);
+
+		/*
 		executor(head);
+		*/
 
 		/* free memory */
 		free(user_input);
@@ -52,4 +56,3 @@ int main(void)
 
 	return (0);
 }
-

@@ -91,23 +91,24 @@ char *_strcat(char *s1, char *s2)
 
 char *_strdup(char *str)
 {
-	int i, n;
+	int i, len;
 	char *dupstr;
 
-	n = 0;
+	len = 0;
 
 	if (str == NULL)
 		return (NULL);
 
-	while (*(str + n) != '\0')
-		n++;
+	while (*(str + len) != '\0')
+		len++;
+	len--;
 
-	dupstr = (char *) malloc(sizeof(char) * n + 1);
+	dupstr = malloc(sizeof(char) * len + 1);
 
 	if (dupstr == NULL)
 		return (NULL);
 
-	for (i = 0; i < n; i++)
+	for (i = 0; i < len; i++)
 		dupstr[i] = str[i];
 
 	dupstr[i] = '\0';
