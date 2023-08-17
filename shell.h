@@ -16,9 +16,11 @@ extern char **environ;
 /* our structs */
 typedef struct cmd
 {
+	int builtin;
 	char *name;
 	char **arguments;
 	char *separator;
+	void (*function)(char **arguments);
 	struct cmd *next;
 } cmd;
 
