@@ -1,6 +1,5 @@
 #include "shell.h"
 
-
 /* Checks if a program exists or not */
 char *find_program(char *name, char **paths)
 {
@@ -48,7 +47,6 @@ char **tokenize(char *input, const char delim)
 		return (NULL);
 	}
 
-	/* function _strtok() */
 	/* get command name */
 	arguments_list[0] = strtok(string, &delim);
 
@@ -58,8 +56,6 @@ char **tokenize(char *input, const char delim)
 
 	return (arguments_list);
 }
-
-
 
 
 /* function to count number of tokens in a string */

@@ -1,8 +1,4 @@
 #include "shell.h"
-/*
-   Create remove_nl
-*/
-
 
 /* compares two strings */
 int _strcmp(char *s1, char *s2)
@@ -117,4 +113,30 @@ char *_strdup(char *str)
 	dupstr[i] = '\0';
 
 	return (dupstr);
+}
+
+/**
+ * remove_nl - Remove newline character and terminate string.
+ *
+ * @input: Input string to process.
+ *
+ * Return: nothing
+ */
+void remove_nl(char *input) 
+{
+	int i, length = 0;
+
+	/* Calculate the length of the input string */
+	while (input[length] != '\0') 
+		length++;
+
+	/* Find the newline character and replace it with null terminator */
+	for (i = 0; i < length; i++) 
+	{
+		if (input[i] == '\n') 
+		{
+			input[i] = '\0';
+			break;
+		}
+	}
 }

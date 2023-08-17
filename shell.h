@@ -13,27 +13,36 @@
 
 extern char **environ;
 
+/* our structs */
 typedef struct cmd
 {
 	char *name;
 	char **arguments;
-	struct cmd *next;
 	char *separator;
+	struct cmd *next;
 } cmd;
 
-void executor(cmd *head);
+/* parser functions */
 cmd *parser(char *input, char **paths);
 char *find_program(char *name, char **paths);
 char **tokenize(char *input, char delim);
-int count_tokens(char *input, char delim);
 cmd *append_cmd(cmd *head, char *cmdname, char **arguments);
-int _strcmp(char *s1, char *s2);
+
+/* env handling functions */
 char **get_paths(void);
 char *_getenv(char *var);
+
+/* executor functions */
+void executor(cmd *head);
+
+/* utility functions */
+int count_tokens(char *input, char delim);
+int _strcmp(char *s1, char *s2);
 char *_strcat(char *s1, char *s2);
-void free_cmdlist(cmd *head);
 char *_strdup(char *str);
 void remove_nl(char *input);
+void free_cmdlist(cmd *head);
 
+/* test functions */
 void print_cmd(cmd *head);
 #endif

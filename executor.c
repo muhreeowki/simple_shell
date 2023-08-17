@@ -1,13 +1,12 @@
 #include "shell.h"
 
+/* TODO: Add multiple executor sub functions to handle different separators and logicall operations */
 
 /* function to execute a list of commands */
 void executor(cmd *head)
 {
 	int status;
 	cmd *curr = head;
-
-	/* TODO: Add multiple executor sub functions to handle different separators and logicall operations */
 
 	while(curr != NULL)
 	{

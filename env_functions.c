@@ -8,12 +8,7 @@
 /* function to get an environmental variable */
 char *_getenv(char *var) /* PATH */
 {
-	int i, j, var_len = 0;
-
-	while (var[var_len] != '\0')
-		var_len++;
-
-	var_len--;
+	int i, j;
 
 	/* loop through environ */
 	for (i = 0; environ[i] != NULL; i++)
