@@ -8,28 +8,39 @@
  */
 
 /* Checks if a program exists or not */
-char *find_program(char *name, char **paths)
+cmd *find_program(cmd *command, char **paths)
 {
 	int i;
 	char *filepath;
 	struct stat st;
 
-	/* 1. check if the users inputed a filepath */
-	if (stat(name, &st) == 0)
-		return (name);
+	/* 1. check if the command is a builtin */
+	for (i = 0; builtins[i].name != NULL; i++)
+	{
+		if(_strcmp(builtins[i].name, command->name) == 0)
+		{
+			command->builtin = 0;
+			return (command);
+		}
+	}
 
-	/* 2. loop through the list of paths searching for the name */
+	/* 2. check if the command name is a filepath */
+	if (stat(command->name, &st) == 0)
+	{
+		command->builtin = 1;
+		return (command);
+	}
+
+	/* 3. searching for the command in PATH */
 	for (i = 0; paths[i] != NULL; i++)
 	{
 		filepath = _strcat(paths[i], _strcat("/", name));
 
 		if (stat(filepath, &st) == 0)
-			return (filepath);
-
-		else 
-			continue;
+			command->name = filepath;
+			return (command);
 	}
 
-	/* 3. Return 0 on succes and -1 on failur. */
+	/* 4. Return 0 on succes and -1 on failur. */
 	return (NULL);
 }

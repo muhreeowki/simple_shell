@@ -24,17 +24,19 @@ typedef struct cmd
 	struct cmd *next;
 } cmd;
 
-/*
-typedef struct arg
-{
-	char *val;
-	arg *next;
-} arg;
-*/
+cmd builtins[] = {
+	{0, "cd", NULL, NULL, NULL, NULL},
+	{0, "env", NULL, NULL, NULL, NULL},
+	{0, "setenv", NULL, NULL, NULL, NULL},
+	{0, "unsetenv", NULL, NULL, NULL, NULL},
+	{0, "exit", NULL, NULL, NULL, NULL},
+	{0, "alias", NULL, NULL, NULL, NULL},
+	{0, NULL, NULL, NULL, NULL, NULL},
+};
 
 /* parser functions */
 cmd *parser(char *input);
-char *find_program(char *name, char **paths);
+cmd *find_program(cmd *command, char **paths);
 char **tokenize(char *input, char delim);
 cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep);
 
@@ -43,7 +45,7 @@ char **get_paths(void);
 char *_getenv(char *var);
 
 /* executor functions */
-void executor(cmd *head);
+void executor(cmd *head, char **arguments);
 
 /* utility functions */
 int count_tokens(char *input, char delim);
@@ -55,4 +57,5 @@ void free_cmdlist(cmd *head);
 
 /* test functions */
 void print_cmd(cmd *head);
+
 #endif

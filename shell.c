@@ -16,7 +16,6 @@ int main(void)
 			perror(NULL);
 			return(-1);
 		}
-
 		
 		write(STDOUT_FILENO, "$ ", 2); /* Prompt */
 
@@ -47,7 +46,7 @@ int main(void)
 
 
 		/*
-		executor(head);
+		executor(head, paths);
 		*/
 
 		/* free memory */

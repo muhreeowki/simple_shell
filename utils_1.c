@@ -125,15 +125,10 @@ char *_strdup(char *str)
  */
 void remove_nl(char *input) 
 {
-	int i, length = 0;
-
-	/* Calculate the length of the input string */
-	while (input[length] != '\0') 
-		length++;
-	length--;
+	int i;
 
 	/* Find the newline character and replace it with null terminator */
-	for (i = 0; i < length; i++) 
+	for (i = 0; input[i] != '\0'; i++) 
 	{
 		if (input[i] == '\n') 
 		{
