@@ -1,8 +1,36 @@
 #include "shell.h"
 
+
+void executor(cmd *head)
+{
+	int status;
+	cmd *curr = head;
+
+	while(curr != NULL)
+	{
+		find_program(*curr);
+
+		curr = curr->next;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* TODO: Add multiple executor sub functions to handle different separators and logicall operations */
 
 /* function to execute a list of commands */
+/*
 void executor(cmd *head)
 {
 	int status;
@@ -29,3 +57,4 @@ void executor(cmd *head)
 		curr = curr->next;
 	}
 }
+*/

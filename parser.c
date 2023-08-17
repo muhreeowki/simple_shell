@@ -11,7 +11,6 @@ cmd *parser(char *input)
 
 	/* function tokenization() - splits command into list of arguments and return list of args */
 	tokens = tokenize(input, ' ');
-	printf("token[0]: %s\n", tokens[0]);
 
 	/* repeate until all commands have been collected */
 	while(1)
@@ -43,59 +42,3 @@ cmd *parser(char *input)
 
 	return (head);
 }
-
-
-
-/* PARSER 1
-#include "shell.h"
-
-
-
-cmd *parser(char *input)
-{
-	cmd *head = NULL;
-	char **arguments, **tokens, *separator;
-	int j = 0, i = 0, flag = 1, count = 0, start;
-
-	while(1)
-	{
-		start = i;
-		count = 0;
-		flag = 1; 
-
-		while (tokens[i] != NULL)
-		{
-			if ((tokens[i][0] == ';' || (tokens[i][0] == '&' && tokens[i][1] == '&') || 
-				(tokens[i][0] == '|' && tokens[i][1] == '|')) && flag == 0)
-			{
-
-				arguments = malloc(sizeof(char *) * count + 1);
-				if (arguments == NULL)
-					return (NULL);
-				for (j = 0; start < count; j++, start++)
-				{
-					printf("%s\n", tokens[start]);
-					arguments[j] = tokens[start];
-				}
-
-				arguments[j] = NULL;
-
-				separator = _strdup(tokens[i]); 
-
-				head = append_cmd(head, arguments[0], arguments, separator);
-
-				i++;
-				break;
-			}
-
-			flag = 0;
-			count++;
-			i++;
-		}
-		if (tokens[i] == NULL)
-			break;
-	}
-
-	return (head);
-}
-*/

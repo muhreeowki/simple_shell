@@ -130,6 +130,7 @@ void remove_nl(char *input)
 	/* Calculate the length of the input string */
 	while (input[length] != '\0') 
 		length++;
+	length--;
 
 	/* Find the newline character and replace it with null terminator */
 	for (i = 0; i < length; i++) 
@@ -137,7 +138,7 @@ void remove_nl(char *input)
 		if (input[i] == '\n') 
 		{
 			input[i] = '\0';
-			break;
+			return;
 		}
 	}
 }

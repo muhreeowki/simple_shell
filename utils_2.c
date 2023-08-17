@@ -12,13 +12,14 @@ void free_cmdlist(cmd *head)
 	cmd *ptr = head;
 	cmd *next;
 
-	if (head == NULL)
+	if (ptr == NULL)
 		return;
+
+	free(ptr->arguments);
 
 	while (ptr)
 	{
 		next = ptr->next;
-		free(ptr->arguments);
 		free(ptr);
 		ptr = next;
 	}
