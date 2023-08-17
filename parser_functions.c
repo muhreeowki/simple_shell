@@ -74,7 +74,7 @@ int count_tokens(char *input, char delim)
 
 
 /* funtion to append a command to a linked list of commands */
-cmd *append_cmd(cmd *head, char *cmdname, char **arguments)
+cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep)
 {
 	cmd *new = malloc(sizeof(cmd));
 
@@ -86,6 +86,7 @@ cmd *append_cmd(cmd *head, char *cmdname, char **arguments)
 
 	new->name = cmdname;
 	new->arguments = arguments;
+	new->separator = sep;
 	new->next = NULL;
 
 	if (head == NULL)

@@ -28,7 +28,7 @@ typedef struct cmd
 cmd *parser(char *input, char **paths);
 char *find_program(char *name, char **paths);
 char **tokenize(char *input, char delim);
-cmd *append_cmd(cmd *head, char *cmdname, char **arguments);
+cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep);
 
 /* env handling functions */
 char **get_paths(void);
