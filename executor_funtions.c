@@ -27,6 +27,7 @@ cmd *find_program(cmd *command, char **paths)
 		if (_strcmp(builtins[i].name, command->name) == 0)
 		{
 			command->builtin = 0;
+			command->function = builtins[i].function;
 			return (command);
 		}
 	}
@@ -60,7 +61,7 @@ cmd *find_program(cmd *command, char **paths)
  * @prev_state: exit status of most previous command
  *
  * Description: This function returns a number based on afew conditions.
- * 1. If sep is ; then we execute the next command.
+ * 1. If sep is ; or NULL then we execute the next command.
  *
  * 2. If sep is || then we check the status of the previous command's
  * exit status. If the status is 0 (success) we skip the next command,

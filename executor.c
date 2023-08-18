@@ -15,7 +15,7 @@ void executor(cmd *head, char **paths)
 	int curr_status = 0, prev_status = 0;
 	cmd *command = head;
 	cmd raw_command;
-	char *curr_sep = NULL, *prev_sep = NULL, **arguments = NULL;
+	char *curr_sep = NULL, *prev_sep = NULL;
 
 	while (command != NULL)
 	{
@@ -37,8 +37,7 @@ void executor(cmd *head, char **paths)
 		if (command->builtin == 0) /* Execute a builtin */
 		{
 			raw_command = *command;
-			arguments = command->arguments;
-			raw_command.function(arguments);
+			raw_command.function(command->arguments);
 		}
 
 		if (command->builtin == 1) /* Execute Program via exec */
