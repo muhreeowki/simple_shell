@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <dirent.h>
 
 #define MAX_INPUT_SIZE 1024
 
@@ -53,5 +54,8 @@ void handle_free(char *input, cmd *head, char **paths);
 
 /* test functions */
 void print_cmd(cmd *head);
+
+/* builtins functions */
+int _cd(char **args);
 
 #endif

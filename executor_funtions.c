@@ -15,7 +15,7 @@ cmd *find_program(cmd *command, char **paths)
 	char *filepath;
 	struct stat st;
 	cmd builtins[] = {
-		{0, "cd", NULL, NULL, NULL, NULL}, {0, "env", NULL, NULL, _env, NULL},
+		{0, "cd", NULL, NULL, _cd, NULL}, {0, "env", NULL, NULL, _env, NULL},
 		{0, "setenv", NULL, NULL, NULL, NULL},
 		{0, "unsetenv", NULL, NULL, NULL, NULL},
 		{0, "exit", NULL, NULL, NULL, NULL}, {0, "alias", NULL, NULL, NULL, NULL},
