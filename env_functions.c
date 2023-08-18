@@ -47,7 +47,7 @@ char **get_paths(void)
  *
  * Return: nothing.
  */
-void _env(char **args)
+int _env(char **args)
 {
 	int i;
 	(void)args;
@@ -56,4 +56,6 @@ void _env(char **args)
 	{
 		printf("%s\n", environ[i]);
 	}
+
+	return (0);
 }

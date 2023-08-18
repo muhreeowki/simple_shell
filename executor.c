@@ -25,19 +25,23 @@ void executor(cmd *head, char **paths)
 		switch (check_sep(prev_sep, curr_status, prev_status))
 		{
 		case -1:
-			exit(-1);
+			return;
 		case 1:
 			command = command->next;
 			continue;
 		}
 
 		if (!find_program(command, paths)) /* Find the program */
+		{
 			perror(NULL);
+			curr_status = -1;
+		}
+			
 
 		if (command->builtin == 0) /* Execute a builtin */
 		{
 			raw_command = *command;
-			raw_command.function(command->arguments);
+			curr_status = raw_command.function(command->arguments);
 		}
 
 		if (command->builtin == 1) /* Execute Program via exec */
