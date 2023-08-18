@@ -1,16 +1,16 @@
 #include "shell.h"
-/*
-   TODO:
-   Create _setenv
-   Create _unsetenv
-*/
 
-/* function to get an environmental variable */
-char *_getenv(char *var) /* PATH */
+/**
+ * _getenv - gets an environmental variable from the environment
+ *
+ * @var: variable to get
+ *
+ * Return: value of that variable
+ */
+char *_getenv(char *var)
 {
 	int i, j;
 
-	/* loop through environ */
 	for (i = 0; environ[i] != NULL; i++)
 	{
 		for (j = 0; *(environ[i] + j) != '=' && var[j] != '\0'; j++)
@@ -23,11 +23,15 @@ char *_getenv(char *var) /* PATH */
 			return ((environ[i] + j + 1));
 	}
 
-	/* return NULL if we dont find anything */
 	return (NULL);
 }
 
-/* Get the PATH and divide it into a list. */
+/**
+ * get_paths - gets the PATH environmental variable
+ * and divides it into its different paths.
+ *
+ * Return: list of all the paths in PATH
+ */
 char **get_paths(void)
 {
 	char *path_string, **paths;

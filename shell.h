@@ -24,7 +24,6 @@ typedef struct cmd
 
 /* Global Variables */
 extern char **environ;
-extern cmd builtins[];
 
 /* parser functions */
 cmd *parser(char *input);
@@ -39,6 +38,8 @@ char *_getenv(char *var);
 /* executor functions */
 void executor(cmd *head, char **arguments);
 int check_sep(char *sep, int curr_state, int prev_state);
+void execute_command(cmd *command, int *prev_status, int *curr_status);
+cmd *init_builtins(void);
 
 /* utility functions */
 int count_tokens(char *input, char delim);
@@ -47,6 +48,7 @@ char *_strcat(char *s1, char *s2);
 char *_strdup(char *str);
 void remove_nl(char *input);
 void free_cmdlist(cmd *head);
+void handle_free(char *input, cmd *head, char **paths);
 
 /* test functions */
 void print_cmd(cmd *head);

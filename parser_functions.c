@@ -1,6 +1,13 @@
 #include "shell.h"
 
-/* function tokenization() - splits command into list of arguments and return list of args */
+/**
+ * tokenize - divides a string input into a list of tokens/words
+ *
+ * @input: pointer to string
+ * @delim: delimiter to divide the string by
+ *
+ * Return: Pointer to list of string
+ */
 char **tokenize(char *input, const char delim)
 {
 	int i, count;
@@ -24,14 +31,21 @@ char **tokenize(char *input, const char delim)
 	/* split the arguments into the string */
 	for (i = 1; i <= count; i++)
 	{
-		arguments_list[i] = strtok(NULL, &delim); /* CREATE OUR OWN strtok function */
+		arguments_list[i] = strtok(NULL, &delim);
 	}
 
 	return (arguments_list);
 }
 
 
-/* function to count number of tokens in a string */
+/**
+ * count_tokens - counts the number of tokens/words in a string
+ *
+ * @input: pointer to string
+ * @delim: delimiter to divide the string by
+ *
+ * Return: Pointer to list of string
+ */
 int count_tokens(char *input, char delim)
 {
 	int i, count = 1;
@@ -46,7 +60,16 @@ int count_tokens(char *input, char delim)
 }
 
 
-/* funtion to append a command to a linked list of commands */
+/**
+ * append_cmd - appends a command to a linked list of commands
+ *
+ * @head: pointer to head of list
+ * @cmdname: name of command
+ * @arguments: pointer to a list of arguments strings
+ * @sep: pointer to the separator
+ *
+ * Return: Pointer to head of list
+ */
 cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep)
 {
 	cmd *new = malloc(sizeof(cmd));
@@ -66,16 +89,13 @@ cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep)
 
 	if (head == NULL)
 		return (new);
-	else
-	{
-		cmd *curr = head;
 
-		while (curr->next)
-			curr = curr->next;
+	cmd *curr = head;
 
-		curr->next = new;
+	while (curr->next)
+		curr = curr->next;
 
-		return(head);
-	}
+	curr->next = new;
 
+	return (head);
 }

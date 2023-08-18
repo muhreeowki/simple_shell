@@ -1,34 +1,35 @@
 #include "shell.h"
 
-/* TODO: Check for seperators and logical opperators and append them to the seperators list */
-/* TODO: if seperators are found, Repeat until we find all the commands. */
 
+/**
+ * parser - parses a string into list of command nodes
+ *
+ * @input: pointer to string
+ *
+ * Return: pointer to a list of commands
+ */
 cmd *parser(char *input)
 {
 	cmd *head = NULL;
 	char **arguments, **tokens, *separator;
 	int i = 0, start = 0;
 
-	/* function tokenization() - splits command into list of arguments and return list of args */
+	remove_nl(input);
 	tokens = tokenize(input, ' ');
-	arguments = (tokens + start); 
+	arguments = (tokens + start);
 
-	/* repeate until all commands have been collected */
-	while(1)
+	while (1)
 	{
-		/* loop through the list of tokens */
 		while (tokens[i] != NULL)
 		{
-			/* Find the end of a command (a separator) */
-			if ((tokens[i][0] == ';' || (tokens[i][0] == '&' && tokens[i][1] == '&') || 
+			if ((tokens[i][0] == ';' || (tokens[i][0] == '&' && tokens[i][1] == '&') ||
 				(tokens[i][0] == '|' && tokens[i][1] == '|')))
 			{
-				separator = _strdup(tokens[i]); /* duplicate the separator and store it in a var */
-				tokens[i] = NULL; /* replace separator with NULL */
-				head = append_cmd(head, arguments[0], arguments, separator); /* Append command to commands list */
-				i++;
-				start = i;
-				arguments = (tokens + start); 
+				separator = _strdup(tokens[i]);
+				tokens[i] = NULL;
+				head = append_cmd(head, arguments[0], arguments, separator);
+				start = ++i;
+				arguments = (tokens + start);
 				break;
 			}
 			i++;
@@ -36,8 +37,8 @@ cmd *parser(char *input)
 
 		if (tokens[i] == NULL)
 		{
-			if(start != i)
-				head = append_cmd(head, arguments[0], arguments, NULL); /* Append command to commands list */
+			if (start != i)
+				head = append_cmd(head, arguments[0], arguments, NULL);
 			break;
 		}
 	}

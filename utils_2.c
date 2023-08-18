@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * free_listint - frees a linked list
+ * free_cmdlist - frees a linked list
  *
  * @head: pointer to the head of the linked list
  *

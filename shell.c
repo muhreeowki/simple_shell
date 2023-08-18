@@ -1,38 +1,38 @@
 #include "shell.h"
 
+/**
+ * main - This is a UNIX command line interpreter.
+ *
+ * Return: nothing.
+ */
 int main(void)
 {
 	size_t size = MAX_INPUT_SIZE;
-	char *input;
-	char **paths;
+	char *input, **paths, nl = '\n';
 	cmd *head = NULL;
-	char nl = '\n';
-	
+
 	while (1)
 	{
 		input = malloc(sizeof(char) * size);
 		if (input == NULL)
-		{
-			perror(NULL);
-			return(-1);
-		}
-		
+			continue;
+
 		write(STDOUT_FILENO, "$ ", 2); /* Prompt */
 
-		if(getline(&input, &size, stdin) == -1) /* Get user input */
+		if (getline(&input, &size, stdin) == -1) /* Get user input; exit on failur */
 		{
-			/* exit on failur */
 			write(STDOUT_FILENO, &nl, 1);
 			free(input);
-			return(0);
+			exit(0);
+		}
+
+		if (*input == '\n')
+		{
+			free(input);
+			continue;
 		}
 
 		paths = get_paths(); /* Get PATH */
-
-
-		remove_nl(input);
-		if (*input == '\0')
-			continue;
 
 		head = parser(input); /* Parse user input into a command */
 
@@ -43,15 +43,23 @@ int main(void)
 		}
 
 		executor(head, paths);
-		/*
-		print_cmd(head);
-		*/
 
-		/* free memory */
-		free(input);
-		free_cmdlist(head);
-		free(paths);
+		handle_free(input, head, paths);
 	}
+}
 
-	return (0);
+/**
+ * handle_free - Handles freeing memory
+ *
+ * @input: user input buffer
+ * @head: linked list of commands
+ * @paths: list of paths in PATH
+ *
+ * Return: nothing.
+ */
+void handle_free(char *input, cmd *head, char **paths)
+{
+	free(input);
+	free_cmdlist(head);
+	free(paths);
 }
