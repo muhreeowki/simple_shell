@@ -18,7 +18,7 @@ typedef struct cmd
 	char *name;
 	char **arguments;
 	char *separator;
-	void (*function)(char **arguments);
+	void (*function)(char **args);
 	struct cmd *next;
 } cmd;
 
@@ -34,6 +34,7 @@ cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep);
 /* env handling functions */
 char **get_paths(void);
 char *_getenv(char *var);
+void _env(char **args);
 
 /* executor functions */
 void executor(cmd *head, char **arguments);
