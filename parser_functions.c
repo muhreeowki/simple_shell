@@ -72,7 +72,7 @@ int count_tokens(char *input, char delim)
  */
 cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep)
 {
-	cmd *new = malloc(sizeof(cmd));
+	cmd *new = malloc(sizeof(cmd)), *curr = head;
 
 	if (new == NULL)
 	{
@@ -89,8 +89,6 @@ cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep)
 
 	if (head == NULL)
 		return (new);
-
-	cmd *curr = head;
 
 	while (curr->next)
 		curr = curr->next;
