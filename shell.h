@@ -57,5 +57,6 @@ void print_cmd(cmd *head);
 
 /* builtins functions */
 int _cd(char **args);
+int _exit2(char **args);
 
 #endif

@@ -60,64 +60,23 @@ int _setenv(char **args)
 		perror(
 }
 
+
+
+
+
+
+
+
 */
 
-/*
-#include "shell.h"
-
-
-int _cd(char **args) 
+int _exit2(char **args)
 {
-    char *cwd;
+	int status;
 
-    if (getcwd(cwd, sizeof(cwd)) == NULL) 
-    {
-        perror("getcwd");
-        return (-1);
-    }
-    cwd = getcwd(NULL, 0);
-    if (args[1] == NULL) 
-    {
-        if (chdir(_getenv("HOME")) == -1) 
+	if (args[1] != NULL)
 	{
-            perror("chdir");
-            return (-1);
-        }
-    } 
-    else if (strcmp(args[1], "-") == 0) 
-    {
-        if (chdir(_getenv("OLDPWD")) == -1) 
-	{
-            perror("chdir");
-            return (-1);
-        }
-    } 
-    else 
-    {
-        if (chdir(args[1]) == -1) 
-	{
-            perror("chdir");
-            return (-1);
-        }
-    }
-
-    setenv("OLDPWD", cwd, 1);
-    if (getcwd(cwd, sizeof(cwd)) != NULL) 
-    {
-        setenv("PWD", cwd, 1);
-    } 
-    else 
-    {
-        perror("getcwd");
-    }
-
-    return (0);
+		status = atoi(args[1]);
+	}
+	exit(status);
+	
 }
-
-
-
-
-
-
-
-*/

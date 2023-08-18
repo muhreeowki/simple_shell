@@ -18,7 +18,7 @@ cmd *find_program(cmd *command, char **paths)
 		{0, "cd", NULL, NULL, _cd, NULL}, {0, "env", NULL, NULL, _env, NULL},
 		{0, "setenv", NULL, NULL, NULL, NULL},
 		{0, "unsetenv", NULL, NULL, NULL, NULL},
-		{0, "exit", NULL, NULL, NULL, NULL}, {0, "alias", NULL, NULL, NULL, NULL},
+		{0, "exit", NULL, NULL, _exit2, NULL}, {0, "alias", NULL, NULL, NULL, NULL},
 		{0, NULL, NULL, NULL, NULL, NULL},
 	};
 
