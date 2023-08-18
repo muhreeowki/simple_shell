@@ -9,17 +9,22 @@ Return: Number of nodes in the list.
 
 void print_cmd(cmd *head)
 {
-    int i;
+    int i = 0;
     cmd *curr = head;
 
     while (curr)
     {
-        printf("name: %s\n", curr->name);
+        printf("command name: %s\n", curr->name);
+	while (curr->name[i] != '\0')
+		i++;
+	printf("name length: %d\n", i);
+
+        printf("separator: %s\n", curr->separator);
 
 	for (i = 0; curr->arguments[i] != NULL; i++)
         	printf("arg[%d]: %s\n", i, curr->arguments[i]);
 
         curr = curr->next;
+	printf("\n");
     }
-    printf("\n");
 }

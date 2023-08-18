@@ -57,9 +57,11 @@ cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep)
 		return (NULL);
 	}
 
+	new->builtin = -1;
 	new->name = cmdname;
 	new->arguments = arguments;
 	new->separator = sep;
+	new->function = NULL;
 	new->next = NULL;
 
 	if (head == NULL)

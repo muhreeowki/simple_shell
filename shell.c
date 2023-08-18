@@ -42,11 +42,9 @@ int main(void)
 			continue;
 		}
 
-		print_cmd(head);
-
-
-		/*
 		executor(head, paths);
+		/*
+		print_cmd(head);
 		*/
 
 		/* free memory */

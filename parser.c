@@ -11,11 +11,11 @@ cmd *parser(char *input)
 
 	/* function tokenization() - splits command into list of arguments and return list of args */
 	tokens = tokenize(input, ' ');
+	arguments = (tokens + start); 
 
 	/* repeate until all commands have been collected */
 	while(1)
 	{
-		arguments = (tokens + start); 
 		/* loop through the list of tokens */
 		while (tokens[i] != NULL)
 		{
@@ -28,14 +28,16 @@ cmd *parser(char *input)
 				head = append_cmd(head, arguments[0], arguments, separator); /* Append command to commands list */
 				i++;
 				start = i;
+				arguments = (tokens + start); 
 				break;
 			}
 			i++;
 		}
 
-		if (tokens && tokens[i] == NULL)
+		if (tokens[i] == NULL)
 		{
-			head = append_cmd(head, arguments[0], arguments, separator); /* Append command to commands list */
+			if(start != i)
+				head = append_cmd(head, arguments[0], arguments, NULL); /* Append command to commands list */
 			break;
 		}
 	}

@@ -34,11 +34,14 @@ cmd *find_program(cmd *command, char **paths)
 	/* 3. searching for the command in PATH */
 	for (i = 0; paths[i] != NULL; i++)
 	{
-		filepath = _strcat(paths[i], _strcat("/", name));
+		filepath = _strcat(paths[i], _strcat("/", command->name));
 
 		if (stat(filepath, &st) == 0)
+		{
 			command->name = filepath;
+			command->builtin = 1;
 			return (command);
+		}
 	}
 
 	/* 4. Return 0 on succes and -1 on failur. */

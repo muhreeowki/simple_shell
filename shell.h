@@ -11,8 +11,6 @@
 
 #define MAX_INPUT_SIZE 1024
 
-extern char **environ;
-
 /* our structs */
 typedef struct cmd
 {
@@ -24,15 +22,9 @@ typedef struct cmd
 	struct cmd *next;
 } cmd;
 
-cmd builtins[] = {
-	{0, "cd", NULL, NULL, NULL, NULL},
-	{0, "env", NULL, NULL, NULL, NULL},
-	{0, "setenv", NULL, NULL, NULL, NULL},
-	{0, "unsetenv", NULL, NULL, NULL, NULL},
-	{0, "exit", NULL, NULL, NULL, NULL},
-	{0, "alias", NULL, NULL, NULL, NULL},
-	{0, NULL, NULL, NULL, NULL, NULL},
-};
+/* Global Variables */
+extern char **environ;
+extern cmd builtins[];
 
 /* parser functions */
 cmd *parser(char *input);
@@ -46,6 +38,7 @@ char *_getenv(char *var);
 
 /* executor functions */
 void executor(cmd *head, char **arguments);
+int check_sep(char *sep, int curr_state, int prev_state);
 
 /* utility functions */
 int count_tokens(char *input, char delim);
