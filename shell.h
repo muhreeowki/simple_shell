@@ -48,10 +48,12 @@ int count_tokens(char *input, char delim);
 int _strcmp(char *s1, char *s2);
 char *_strcat(char *s1, char *s2);
 char *_strdup(char *str);
+int _strlen(const char *s);
 void remove_nl(char *input);
 void free_cmdlist(cmd *head);
 void handle_free(char *input, cmd *head, char **paths);
-int _strlen(const char *s);
+int handle_errors(char *message);
+int _atoi(char *s);
 
 /* test functions */
 void print_cmd(cmd *head);
@@ -60,5 +62,6 @@ void print_cmd(cmd *head);
 int _cd(char **args);
 int _exit2(char **args);
 int _setenv(char **args);
+int _unsetenv(char **args);
 
 #endif

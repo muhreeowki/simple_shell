@@ -130,10 +130,3 @@ void remove_nl(char *input)
 		}
 	}
 }
-/*
-
-
-
-
-
-*/
