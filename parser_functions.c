@@ -30,6 +30,8 @@ char **tokenize(char *input, const char delim)
 		{
 			start = i;
 			substring = (string + start);
+			flag = 0;
+			/*
 			if (*substring == '"')
 			{
 				substring++;
@@ -43,6 +45,7 @@ char **tokenize(char *input, const char delim)
 			}
 			else
 				flag = 0;
+			*/
 		}
 		if (string[i] == delim)
 		{
