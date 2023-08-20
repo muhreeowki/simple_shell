@@ -48,26 +48,105 @@ int _cd(char **args)
 
 
 
-/*
-
    
 
 int _setenv(char **args)
 {
+	int i;
+	int num_vars = 0;
+	char **new_environ;
+	char *new_env;
 	
 	if (args[1] == NULL || args[2] == NULL)
 	{
-		perror(
+		perror(NULL);
+		return (-1);
+	}
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		environvar = _getenv(args[1]);
+		if (environvar)
+		{
+			char *new_environ;
+			new_environ = malloc(_strlen(args[1]) + _strlen(args[2]) + 1);
+			if (new_environ == NULL)
+			{
+				perror(NULL);
+				return(-1);
+			}
+
+			*args = new_environ;
+			environ[i] = new_environ;
+			return (0);
+		}
+	}
+	
+	while(environ[num_vars] != NULL)
+		num_vars++;
+
+	new_environ = realloc(environ, (num_vars + 1) * sizeof(char *));
+	if (new_environ == NULL)
+	{
+		perror(NULL);
+		return(-1);
+	}
+	new_env = malloc(strlen(args[1]) + strlen(args[2]) + 1);
+	if (new_env == NULL)
+	{
+		perror("malloc");
+		return 1;
+	}
+	*args = new_env;
+	new_environ[num_vars] = new_env;
+	new_environ[num_vars + 1] = NULL;
+	environ = new_environ;
+
+	return (0);
 }
 
 
 
 
+int _unsetenv(char **args)
+{
+	int i;
+	int target_index = -1;
+
+	if (args[1] == NULL) 
+	{
+		perror(NULL);
+		return (1);
+	}
+
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		if (_strcmp(environ[i], args[1]) == 0)
+		{
+			target_index = i;
+			break;
+		}
+	}
+
+	if (target_index == -1)
+	{
+		perror(NULL);
+
+		return (1);
+	}
+
+	free(environ[target_index]);
+	/* Shift the rest of the environment variables to close the gap*/
+	for (i = target_index; environ[i] != NULL; i++)
+	{
+		environ[i] = environ[i + 1];
+	}
+
+	return (0);
+}
 
 
 
 
-*/
 
 int _exit2(char **args)
 {

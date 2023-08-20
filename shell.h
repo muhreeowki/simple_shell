@@ -51,6 +51,7 @@ char *_strdup(char *str);
 void remove_nl(char *input);
 void free_cmdlist(cmd *head);
 void handle_free(char *input, cmd *head, char **paths);
+int _strlen(const char *s);
 
 /* test functions */
 void print_cmd(cmd *head);
@@ -58,5 +59,6 @@ void print_cmd(cmd *head);
 /* builtins functions */
 int _cd(char **args);
 int _exit2(char **args);
+int _setenv(char **args);
 
 #endif

@@ -24,3 +24,13 @@ void free_cmdlist(cmd *head)
 		ptr = next;
 	}
 }
+
+int _strlen(const char *s)
+{
+	int len;
+
+	for (len = 0; s[len] != 0; len++)
+	{
+	}
+	return (len);
+}
