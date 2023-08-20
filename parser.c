@@ -14,6 +14,13 @@ cmd *parser(char *input)
 	char **arguments, **tokens, *separator;
 	int i = 0, start = 0;
 
+
+	/*
+	while(input[len])
+		len++;
+	*/
+
+
 	remove_nl(input);
 	tokens = tokenize(input, ' ');
 	arguments = (tokens + start);

@@ -2,6 +2,7 @@
 
 /**
  * tokenize - divides a string input into a list of tokens/words
+ * (similar to _strtok)
  *
  * @input: pointer to string
  * @delim: delimiter to divide the string by
@@ -10,9 +11,10 @@
  */
 char **tokenize(char *input, const char delim)
 {
-	int i, count;
-	char **arguments_list;
+	int i, count, n = 0, flag = 1, start = 0;
+	char **arguments_list, *substring;
 	char *string = _strdup(input);
+	
 
 	/* Count number of tokens */
 	count = count_tokens(string, delim);
@@ -25,14 +27,29 @@ char **tokenize(char *input, const char delim)
 		return (NULL);
 	}
 
-	/* get command name */
-	arguments_list[0] = strtok(string, &delim);
-
-	/* split the arguments into the string */
-	for (i = 1; i <= count; i++)
+	/* loop through the string */
+	/* create substrings where we find a delim */
+	/* strtok: handle */
+	for (i = 0; string[i] != '\0'; i++)
 	{
-		arguments_list[i] = strtok(NULL, &delim);
+		if (flag == 1)
+		{
+			start = i;
+			substring = (string + start);
+			flag = 0;
+		}
+
+		if (string[i] == delim)
+		{
+			string[i] = '\0';
+			flag = 1;
+			if (string[i - 1] > 32 && string[i - 1] < 127)
+				arguments_list[n++] = substring;
+		}
 	}
+
+	if (string[i - 1] > 32 && string[i - 1] < 127)
+		arguments_list[n] = substring;
 
 	return (arguments_list);
 }

@@ -19,7 +19,7 @@ int main(void)
 
 		write(STDOUT_FILENO, "$ ", 2); /* Prompt */
 
-		if (getline(&input, &size, stdin) == -1) /* Get user input; exit on failur */
+		if (_getline(STDIN_FILENO, &input, &size) == -1) /* Get user input; exit on failur */
 		{
 			write(STDOUT_FILENO, &nl, 1);
 			free(input);

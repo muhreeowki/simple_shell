@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <dirent.h>
+#include <limits.h>
 
 #define MAX_INPUT_SIZE 1024
 
@@ -54,6 +55,7 @@ void free_cmdlist(cmd *head);
 void handle_free(char *input, cmd *head, char **paths);
 int handle_errors(char *message);
 int _atoi(char *s);
+ssize_t _getline(int fd, char **buff, size_t *size);
 
 /* test functions */
 void print_cmd(cmd *head);
