@@ -12,14 +12,9 @@
 char **tokenize(char *input, const char delim)
 {
 	int i, count, n = 0, flag = 1, start = 0;
-	char **arguments_list, *substring;
-	char *string = _strdup(input);
+	char **arguments_list, *substring, *string = _strdup(input);
 	
-
-	/* Count number of tokens */
 	count = count_tokens(string, delim);
-
-	/* allocate memory */
 	arguments_list = malloc(sizeof(char *) * (count + 1));
 	if (arguments_list == NULL)
 	{
@@ -27,24 +22,37 @@ char **tokenize(char *input, const char delim)
 		return (NULL);
 	}
 
-	/* loop through the string */
-	/* create substrings where we find a delim */
-	/* strtok: handle */
+	/* Divide this function into parts */
+	/* One part to handle delimiter and another part to handle quotes */
 	for (i = 0; string[i] != '\0'; i++)
 	{
 		if (flag == 1)
 		{
 			start = i;
 			substring = (string + start);
-			flag = 0;
+			if (*substring == '"')
+			{
+				substring++;
+				while(string[i] != '"')
+					i++;
+				string[i] = '\0';
+				printf("%s\n", substring);
+				arguments_list[n++] = substring;
+				flag = 1;
+				continue;
+			}
+			else
+				flag = 0;
 		}
-
 		if (string[i] == delim)
 		{
 			string[i] = '\0';
 			flag = 1;
 			if (string[i - 1] > 32 && string[i - 1] < 127)
+			{
 				arguments_list[n++] = substring;
+				printf("%s\n", substring);
+			}
 		}
 	}
 

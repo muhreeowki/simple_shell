@@ -64,11 +64,11 @@ int _setenv(char **args)
 		num_vars++;
 
 	/* Reallocate a new list */
-	new_environ = malloc((num_vars + 2) * sizeof(char *)); /* +2 is for NULL and our new var */
+	new_environ = malloc((num_vars + 2) * sizeof(char *));
 	if (new_environ == NULL)
 		return(handle_errors(NULL));
 
-	new_env = malloc(strlen(args[1]) + strlen(args[2]) + 2); /* +2 for NULL and Equal sign */
+	new_env = malloc(strlen(args[1]) + strlen(args[2]) + 2);
 	if (new_env == NULL)
 		return(handle_errors(NULL));
 
@@ -101,7 +101,6 @@ int _unsetenv(char **args)
 	if (var_val)
 	{
 		whole_var = _strcat(_strcat(args[1], "="), var_val);
-		printf("\n%s\n", whole_var);
 		for (i = 0; environ[i] != NULL; i++)
 		{
 			if (_strcmp(environ[i], whole_var) == 0)
