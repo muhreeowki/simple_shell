@@ -1,6 +1,7 @@
 #include "shell.h"
 
 
+/* How to get one line at a time */
 ssize_t _getline(int fd, char **buff, size_t *size) 
 {
 	ssize_t bytes_read, buffsize = SSIZE_MAX;

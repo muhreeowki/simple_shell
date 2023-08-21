@@ -10,8 +10,9 @@
 #include <sys/wait.h>
 #include <dirent.h>
 #include <limits.h>
+#include <fcntl.h>
 
-#define MAX_INPUT_SIZE 1024
+#define MAX_INPUT_SIZE 4096
 
 /* our structs */
 typedef struct cmd
@@ -26,6 +27,10 @@ typedef struct cmd
 
 /* Global Variables */
 extern char **environ;
+
+/* main functions */
+int user_mode(void);
+int file_mode(char **argv);
 
 /* parser functions */
 cmd *parser(char *input);
@@ -45,20 +50,22 @@ void execute_command(cmd *command, int *prev_status, int *curr_status);
 cmd *init_builtins(void);
 
 /* utility functions */
+ssize_t _getline(int fd, char **buff, size_t *size);
+int handle_errors(char *message);
+
+/* string utility functions */
 int count_tokens(char *input, char delim);
 int _strcmp(char *s1, char *s2);
 char *_strcat(char *s1, char *s2);
 char *_strdup(char *str);
 int _strlen(const char *s);
 void remove_nl(char *input);
+int check_empty(char *string);
+int _atoi(char *s);
+
+/* memory management */
 void free_cmdlist(cmd *head);
 void handle_free(char *input, cmd *head, char **paths);
-int handle_errors(char *message);
-int _atoi(char *s);
-ssize_t _getline(int fd, char **buff, size_t *size);
-
-/* test functions */
-void print_cmd(cmd *head);
 
 /* builtins functions */
 int _cd(char **args);
@@ -66,4 +73,6 @@ int _exit2(char **args);
 int _setenv(char **args);
 int _unsetenv(char **args);
 
+/* test functions */
+void print_cmd(cmd *head);
 #endif

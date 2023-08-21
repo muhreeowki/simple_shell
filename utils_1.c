@@ -130,3 +130,19 @@ void remove_nl(char *input)
 		}
 	}
 }
+
+int check_empty(char *string)
+{
+	int i, isempty = -1;
+
+	if (string == NULL || *string == '\0' || *string == '\n')
+		return (-1);
+	
+	for (i = 0; string[i] != '\0'; i++)
+	{
+		if (string[i] > 32 && string[i] < 127)
+			isempty = 0;
+	}
+
+	return (isempty);
+}

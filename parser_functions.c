@@ -30,32 +30,23 @@ char **tokenize(char *input, const char delim)
 		{
 			start = i;
 			substring = (string + start);
-			flag = 0;
-			/*
-			if (*substring == '"')
+			if (string[i] > 32 && string[i] < 127)
+				flag = 0;
+			else
 			{
-				substring++;
-				while(string[i] != '"')
-					i++;
-				string[i] = '\0';
-				printf("%s\n", substring);
-				arguments_list[n++] = substring;
 				flag = 1;
 				continue;
 			}
-			else
-				flag = 0;
-			*/
 		}
-		if (string[i] == delim)
+
+		if (string[i] == delim || string[i] == '\n')
 		{
+			if (flag == 1)
+				continue;
 			string[i] = '\0';
 			flag = 1;
 			if (string[i - 1] > 32 && string[i - 1] < 127)
-			{
 				arguments_list[n++] = substring;
-				printf("%s\n", substring);
-			}
 		}
 	}
 
@@ -125,3 +116,20 @@ cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep)
 
 	return (head);
 }
+
+			/*
+			HANDLE QUOTATION MARKS
+			if (*substring == '"')
+			{
+				substring++;
+				while(string[i] != '"')
+					i++;
+				string[i] = '\0';
+				printf("%s\n", substring);
+				arguments_list[n++] = substring;
+				flag = 1;
+				continue;
+			}
+			else
+				flag = 0;
+			*/

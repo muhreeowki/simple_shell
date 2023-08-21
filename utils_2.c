@@ -25,6 +25,32 @@ void free_cmdlist(cmd *head)
 	}
 }
 
+/**
+ * handle_free - Handles freeing memory
+ *
+ * @input: user input buffer
+ * @head: linked list of commands
+ * @paths: list of paths in PATH
+ *
+ * Return: nothing.
+ */
+void handle_free(char *input, cmd *head, char **paths)
+{
+	if (input)
+		free(input);
+	if (head)
+		free_cmdlist(head);
+	if (paths)
+		free(paths);
+}
+
+/**
+ * _strlen - gets the length of a string
+ *
+ * @s: pointer to a string
+ *
+ * Return: length of the string.
+ */
 int _strlen(const char *s)
 {
 	int len;
@@ -35,6 +61,13 @@ int _strlen(const char *s)
 	return (len);
 }
 
+/**
+ * handle_errors - helper function to handle errors
+ *
+ * @message: optional error message
+ *
+ * Return: -1.
+ */
 int handle_errors(char *message)
 {
 	perror(message);
