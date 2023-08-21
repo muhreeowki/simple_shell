@@ -128,12 +128,10 @@ int _unsetenv(char **args)
 
 int _exit2(char **args)
 {
-	int status;
+	int status = 0;
 
 	if (args[1] != NULL)
-	{
 		status = _atoi(args[1]);
-	}
+
 	exit(status);
-	
 }
