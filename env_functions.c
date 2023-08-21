@@ -42,20 +42,3 @@ char **get_paths(void)
 	return (paths);
 }
 
-/**
- * _env - prints all the environmental variables
- *
- * Return: nothing.
- */
-int _env(char **args)
-{
-	int i;
-	(void)args;
-
-	for (i = 0; environ[i]; i++)
-	{
-		printf("%s\n", environ[i]);
-	}
-
-	return (0);
-}

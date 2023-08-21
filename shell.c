@@ -8,7 +8,7 @@
 int main(int argc, char **argv)
 {
 	if (argc == 1)
-		user_mode();
+		user_mode(argv);
 
 	if (argc >= 2)
 		file_mode(argv);
@@ -22,12 +22,12 @@ int main(int argc, char **argv)
  *
  * Return: nothing.
  */
-int user_mode(void)
+int user_mode(char **argv)
 {
 	size_t size = MAX_INPUT_SIZE;
-	char *input, **paths, **lines, nl = '\n';
+	char *input, **paths, **lines, nl = '\n', *program_name = _strcat(argv[0], ": ");
 	cmd *head = NULL;
-	int i, prompt_mode;
+	int i, prompt_mode, command_count = 1, exit_status;
 
 	while (1)
 	{
@@ -45,7 +45,7 @@ int user_mode(void)
 			if (prompt_mode == 1)
 				write(STDOUT_FILENO, &nl, 1);
 			free(input);
-			exit(0);
+			exit(exit_status);
 		}
 
 		if (check_empty(input) == -1)
@@ -59,12 +59,7 @@ int user_mode(void)
 		{
 			paths = get_paths();
 			head = parser(lines[i]);
-
-			if (head == NULL)
-				return(handle_errors(NULL));
-
-			executor(head, paths);
-
+			exit_status = executor(head, paths, program_name, &command_count);
 			handle_free(NULL, head, paths);
 		}
 		free(input);
@@ -79,9 +74,9 @@ int user_mode(void)
  */
 int file_mode(char **argv)
 {
-	int fd, i, j;
+	int fd, i, j, command_count, exitstatus;
 	size_t size = MAX_INPUT_SIZE;
-	char *input, **paths, **lines;
+	char *input, **paths, **lines, *program_name = argv[0];
 	cmd *head = NULL;
 
 	for (i = 1, j = 0; argv[i] != NULL; i++)
@@ -89,12 +84,12 @@ int file_mode(char **argv)
 		/* Open the file */
 		fd = open(argv[1], O_RDONLY);
 		if (fd == -1)
-			return (handle_errors(NULL));
+			return (handle_errors(NULL, exitstatus));
 
 		/* allocate memory */
 		input = malloc(sizeof(char) * size);
 		if (input == NULL)
-			return (handle_errors(NULL));
+			return (handle_errors(NULL, exitstatus));
 
 		/* Read line by line and execute each command */
 		while (read(fd, input, size))
@@ -105,17 +100,11 @@ int file_mode(char **argv)
 			lines = tokenize(input, '\n');
 			for (j = 0; lines[j]; j++)
 			{
-				paths = get_paths(); /* Get PATH */
-				head = parser(lines[j]); /* Parse user input into a command */
-
-				if (head == NULL)
-					return(handle_errors(NULL));
-
-				executor(head, paths);
-
+				paths = get_paths();
+				head = parser(lines[j]);
+				exitstatus = executor(head, paths, program_name, &command_count);
 				handle_free(NULL, head, paths);
 			}
-
 		}
 		free(input);
 	}

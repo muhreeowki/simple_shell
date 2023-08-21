@@ -68,10 +68,10 @@ int _strlen(const char *s)
  *
  * Return: -1.
  */
-int handle_errors(char *message)
+int handle_errors(char *message, int status)
 {
-	perror(message);
-	return (-1);
+	write(STDERR_FILENO, message, _strlen(message));
+	return (status);
 }
 
 /**
