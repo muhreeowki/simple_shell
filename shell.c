@@ -25,9 +25,9 @@ int main(int argc, char **argv)
 int user_mode(void)
 {
 	size_t size = MAX_INPUT_SIZE;
-	ssize_t bytes_read = 1;
-	char *input, **paths, nl = '\n';
+	char *input, **paths, **lines, nl = '\n';
 	cmd *head = NULL;
+	int i;
 
 	while (1)
 	{
@@ -38,8 +38,7 @@ int user_mode(void)
 		write(STDOUT_FILENO, "$ ", 2); /* Prompt */
 
 		/* Get user input; exit on failur */
-		bytes_read = _getline(STDIN_FILENO, &input, &size);
-		if (bytes_read == -1) 
+		if (_getline(STDIN_FILENO, &input, &size) == -1) 
 		{
 			write(STDOUT_FILENO, &nl, 1);
 			free(input);
@@ -47,17 +46,25 @@ int user_mode(void)
 		}
 
 		if (check_empty(input) == -1)
+		{
+			free(input);
 			continue;
+		}
 
-		paths = get_paths(); /* Get PATH */
-		head = parser(input); /* Parse user input into a command */
+		lines = tokenize(input, '\n');
+		for (i = 0; lines[i]; i++)
+		{
+			paths = get_paths();
+			head = parser(lines[i]);
 
-		if (head == NULL)
-			return(handle_errors(NULL));
+			if (head == NULL)
+				return(handle_errors(NULL));
 
-		executor(head, paths);
+			executor(head, paths);
 
-		handle_free(input, head, paths);
+			handle_free(NULL, head, paths);
+		}
+		free(input);
 	}
 }
 

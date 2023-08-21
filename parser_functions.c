@@ -30,6 +30,8 @@ char **tokenize(char *input, const char delim)
 		{
 			start = i;
 			substring = (string + start);
+			flag = 0;
+			/*
 			if (string[i] > 32 && string[i] < 127)
 				flag = 0;
 			else
@@ -37,20 +39,21 @@ char **tokenize(char *input, const char delim)
 				flag = 1;
 				continue;
 			}
+			*/
 		}
 
-		if (string[i] == delim || string[i] == '\n')
+		if (string[i] == delim)
 		{
 			if (flag == 1)
 				continue;
 			string[i] = '\0';
 			flag = 1;
-			if (string[i - 1] > 32 && string[i - 1] < 127)
+			if (string[i - 1] >= 32 && string[i - 1] < 127)
 				arguments_list[n++] = substring;
 		}
 	}
 
-	if (string[i - 1] > 32 && string[i - 1] < 127)
+	if (string[i - 1] >= 31 && string[i - 1] < 127)
 		arguments_list[n] = substring;
 
 	return (arguments_list);
