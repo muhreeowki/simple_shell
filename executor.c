@@ -15,7 +15,7 @@ void executor(cmd *head, char **paths)
 	int curr_status = 0, prev_status = 0;
 	cmd *command = head;
 	cmd raw_command;
-	char *curr_sep = NULL, *prev_sep = NULL;
+	char *curr_sep = NULL, *prev_sep = NULL, *errmsg;
 
 	while (command != NULL)
 	{
@@ -33,7 +33,8 @@ void executor(cmd *head, char **paths)
 
 		if (!find_program(command, paths)) /* Find the program */
 		{
-			perror(NULL);
+			errmsg = _strcat(program_name ,_strcat(command->name, ": not found\n"));
+			write(STDERR_FILENO, errmsg, _strlen(errmsg));
 			curr_status = -1;
 		}
 			
@@ -48,5 +49,6 @@ void executor(cmd *head, char **paths)
 			execute_command(command, &curr_status, &prev_status);
 
 		command = command->next;
+		command_count++;
 	}
 }

@@ -58,7 +58,7 @@ char *_strcat(char *s1, char *s2)
 	while (s2[len2] != '\0')
 		len2++;
 
-	newstr = malloc(sizeof(len1 + len2 + 1));
+	newstr = malloc(sizeof(char) * (len1 + len2 + 2));
 	if (newstr == NULL)
 	{
 		perror(NULL);

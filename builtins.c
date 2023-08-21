@@ -64,11 +64,11 @@ int _setenv(char **args)
 		num_vars++;
 
 	/* Reallocate a new list */
-	new_environ = malloc((num_vars + 2) * sizeof(char *));
+	new_environ = malloc((sizeof(char *)) * (num_vars + 2));
 	if (new_environ == NULL)
 		return(handle_errors(NULL));
 
-	new_env = malloc(strlen(args[1]) + strlen(args[2]) + 2);
+	new_env = malloc(sizeof(char) * (strlen(args[1]) + strlen(args[2]) + 2));
 	if (new_env == NULL)
 		return(handle_errors(NULL));
 
@@ -128,10 +128,14 @@ int _unsetenv(char **args)
 
 int _exit2(char **args)
 {
-	int status = 0;
+	int def_status = 0, status;
 
 	if (args[1] != NULL)
+	{
 		status = _atoi(args[1]);
+		if (status == 0)
+			exit(status);
+	}
 
-	exit(status);
+	exit(def_status);
 }
