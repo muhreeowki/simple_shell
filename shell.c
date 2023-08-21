@@ -27,7 +27,7 @@ int user_mode(void)
 	size_t size = MAX_INPUT_SIZE;
 	char *input, **paths, **lines, nl = '\n';
 	cmd *head = NULL;
-	int i;
+	int i, prompt_mode;
 
 	while (1)
 	{
@@ -35,12 +35,15 @@ int user_mode(void)
 		if (input == NULL)
 			continue;
 
-		write(STDOUT_FILENO, "$ ", 2); /* Prompt */
+		prompt_mode = isatty(STDIN_FILENO);
+		if (prompt_mode == 1)
+			write(STDOUT_FILENO, "$ ", 2); /* Prompt */
 
 		/* Get user input; exit on failur */
 		if (_getline(STDIN_FILENO, &input, &size) == -1) 
 		{
-			write(STDOUT_FILENO, &nl, 1);
+			if (prompt_mode == 1)
+				write(STDOUT_FILENO, &nl, 1);
 			free(input);
 			exit(0);
 		}
