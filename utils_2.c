@@ -20,6 +20,7 @@ void free_cmdlist(cmd *head)
 	while (ptr)
 	{
 		next = ptr->next;
+		/*free(ptr->separator);*/
 		free(ptr);
 		ptr = next;
 	}
@@ -54,6 +55,9 @@ void handle_free(char *input, cmd *head, char **paths)
 int _strlen(const char *s)
 {
 	int len;
+
+/*	if (s == NULL)
+		return (0);*/
 
 	for (len = 0; s[len] != 0; len++)
 		;

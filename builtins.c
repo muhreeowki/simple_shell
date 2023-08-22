@@ -3,6 +3,7 @@
 int _cd(char **args, char *name, int *count) 
 {
 	char *oldcwd, *newcwd, *msg1, *msg2, *errmsg;
+	char newline = '\n';
 	DIR *dir;
 
 	/* Error msg */
@@ -17,8 +18,15 @@ int _cd(char **args, char *name, int *count)
 	/* Handle empty arg */
 	if (args[1]) 
 	{
-		if (args[1][0] == '-' && args[1][1] == '\0') 
-			newcwd = _getenv("OLDPWD");
+		if (args[1][0] == '-' && args[1][1] == '\0')
+		{
+			newcwd =_getenv("OLDPWD");
+
+			/*newnewcwd = _strcat(newcwd, "\n");*/
+
+			write(STDOUT_FILENO, newcwd, _strlen(newcwd));
+			write(STDOUT_FILENO, &newline, 1);
+		}
 		else
 		{
 			dir = opendir(args[1]);
