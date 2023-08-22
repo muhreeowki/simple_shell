@@ -60,7 +60,7 @@ int user_mode(char **argv)
 		{
 			paths = get_paths();
 			head = parser(lines[i]);
-			exit_status = executor(head, paths, program_name, &command_count);
+			exit_status = executor(head, paths, program_name, &command_count, &exit_status);
 			handle_free(NULL, head, paths);
 		}
 		free(input);
@@ -75,7 +75,7 @@ int user_mode(char **argv)
  */
 int file_mode(char **argv)
 {
-	int fd, j, command_count, exitstatus = 0;
+	int fd, j, command_count, exit_status = 0;
 	size_t size = MAX_INPUT_SIZE;
 	char *input, **paths, **lines, *program_name = argv[0];
 	cmd *head = NULL;
@@ -83,12 +83,12 @@ int file_mode(char **argv)
 	/* Open the file */
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (handle_errors(NULL, exitstatus));
+		return (handle_errors(NULL, exit_status));
 
 	/* allocate memory */
 	input = malloc(sizeof(char) * size);
 	if (input == NULL)
-		return (handle_errors(NULL, exitstatus));
+		return (handle_errors(NULL, exit_status));
 
 	/* Read line by line and execute each command */
 	while (read(fd, input, size))
@@ -101,7 +101,7 @@ int file_mode(char **argv)
 		{
 			paths = get_paths();
 			head = parser(lines[j]);
-			exitstatus = executor(head, paths, program_name, &command_count);
+			exit_status = executor(head, paths, program_name, &command_count, &exit_status);
 			handle_free(NULL, head, paths);
 		}
 	}

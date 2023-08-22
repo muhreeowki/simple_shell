@@ -21,7 +21,7 @@ typedef struct cmd
 	char *name;
 	char **arguments;
 	char *separator;
-	int (*function)(char **args, char *name, int *count);
+	int (*function)(char **args, char *name, int *count, int *status);
 	struct cmd *next;
 } cmd;
 
@@ -44,8 +44,8 @@ char **get_paths(void);
 char *_getenv(char *var);
 
 /* executor functions */
-int executor(cmd *head, char **arguments, char *errmsg, int *count);
-int check_sep(char *prev_sep, char *next_sep, int curr_state, int prev_state);
+int executor(cmd *head, char **paths, char *name, int *count, int *exit_status);
+int check_sep(char *prev_sep, int curr_state, int prev_state);
 void execute_command(cmd *command, int *prev_status, int *curr_status);
 cmd *init_builtins(void);
 
@@ -70,11 +70,11 @@ void free_cmdlist(cmd *head);
 void handle_free(char *input, cmd *head, char **paths);
 
 /* builtins functions */
-int _cd(char **args, char *name, int *count);
-int _exit2(char **args, char *name, int *count);
-int _setenv(char **args, char *name, int *count);
-int _unsetenv(char **args, char *name, int *count);
-int _env(char **args, char *name, int *count);
+int _cd(char **args, char *name, int *count, int *status);
+int _exit2(char **args, char *name, int *count, int *status);
+int _setenv(char **args, char *name, int *count, int *status);
+int _unsetenv(char **args, char *name, int *count, int *status);
+int _env(char **args, char *name, int *count, int *status);
 
 /* test functions */
 void print_cmd(cmd *head);

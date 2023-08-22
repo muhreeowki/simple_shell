@@ -1,12 +1,12 @@
 #include "shell.h"
 
-int _cd(char **args, char *name, int *count) 
+int _cd(char **args, char *name, int *count, int *status) 
 {
 	char *oldcwd, *newcwd, *msg1, *msg2, *errmsg;
 	char newline = '\n';
 	DIR *dir;
 
-	/* Error msg */
+	(void)status;
 	msg1 = _strcat(name, _strcat(_itoa(*count, 10), ": "));
 	msg2 = _strcat("cd: can't cd to ", _strcat(args[1], "\n"));
 	errmsg = _strcat(msg1, msg2);
@@ -15,15 +15,11 @@ int _cd(char **args, char *name, int *count)
 	if (oldcwd == NULL)
 		return(handle_errors(errmsg, 2));
 
-	/* Handle empty arg */
 	if (args[1]) 
 	{
 		if (args[1][0] == '-' && args[1][1] == '\0')
 		{
 			newcwd =_getenv("OLDPWD");
-
-			/*newnewcwd = _strcat(newcwd, "\n");*/
-
 			write(STDOUT_FILENO, newcwd, _strlen(newcwd));
 			write(STDOUT_FILENO, &newline, 1);
 		}
@@ -50,13 +46,14 @@ int _cd(char **args, char *name, int *count)
 
 
 
-int _setenv(char **args, char *name, int *count)
+int _setenv(char **args, char *name, int *count, int *status)
 {
 	int i;
 	int num_vars = 0;
 	char **new_environ, *new_env, *msg1, *msg2, *errmsg;
 	
 	/* Error msg */
+	(void)status;
 	msg1 = _strcat(name, _strcat(_itoa(*count, 10), ": "));
 	msg2 = "Usage: setenv VARIABLE VALUE \n";
 	errmsg = _strcat(msg1, msg2);
@@ -102,12 +99,13 @@ int _setenv(char **args, char *name, int *count)
 
 
 
-int _unsetenv(char **args, char *name, int *count)
+int _unsetenv(char **args, char *name, int *count, int *status)
 {
 	int i, target_index = -1;
 	char *var_val, *whole_var = NULL, *msg1, *msg2, *errmsg;
 
 	/* Error msg */
+	(void)status;
 	msg1 = _strcat(name, _strcat(_itoa(*count, 10), ": "));
 	msg2 = "Usage: unsetenv VARIABLE VALUE \n";
 	errmsg = _strcat(msg1, msg2);
@@ -144,10 +142,10 @@ int _unsetenv(char **args, char *name, int *count)
 
 
 
-int _exit2(char **args, char *name, int *count)
+int _exit2(char **args, char *name, int *count, int *status)
 {
-	int def_status = 0, status;
 	char *msg1, *msg2, *errmsg;
+	int user_status;
 
 	/* Error msg */
 	msg1 = _strcat(name, _strcat(_itoa(*count, 10), ": "));
@@ -156,16 +154,13 @@ int _exit2(char **args, char *name, int *count)
 
 	if (args[1] != NULL)
 	{
-		status = _atoi(args[1]);
-		if (status <= 0)
+		user_status = _atoi(args[1]);
+		if (user_status <= 0)
 			return(handle_errors(errmsg, 2));
-
 		else
-			exit(status);
+			exit(user_status);
 	}
-	else
-		exit(def_status);
-
+	exit(*status);
 }
 
 /**
@@ -173,13 +168,14 @@ int _exit2(char **args, char *name, int *count)
  *
  * Return: nothing.
  */
-int _env(char **args, char *name, int *count)
+int _env(char **args, char *name, int *count, int *status)
 {
 	char *string;
 	int i;
 	(void)args;
 	(void)name;
 	(void)count;
+	(void)status;
 
 	for (i = 0; environ[i]; i++)
 	{

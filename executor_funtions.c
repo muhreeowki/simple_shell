@@ -75,29 +75,26 @@ cmd *find_program(cmd *command, char **paths)
  * 1 -> Skip the next command
  * -1 -> Terminate: Do not run the next command.
  */
-int check_sep(char *prev_sep, char *next_sep, int curr_state, int prev_state)
+int check_sep(char *sep, int curr_state, int prev_state)
 {
-	if (prev_sep == NULL || prev_sep[0] == ';')
+	if (sep == NULL || sep[0] == ';')
 		return (0);
 
-	if ((prev_sep[0] == '&' && prev_sep[1] == '&'))
-	{
-		if ((curr_state == 0 && prev_state == 0) || 
-		((prev_state == 0 && curr_state != 0) && ((next_sep[0] == '|' && next_sep[1] == '|'))))
+	if ((sep[0] == '&' && sep[1] == '&'))
+		if (curr_state == 0)
 			return (0);
-	}
 
-	if ((prev_sep[0] == '|' && prev_sep[1] == '|'))
+	if ((sep[0] == '|' && sep[1] == '|'))
 	{
-		if (prev_state == 0)
+		(void)prev_state;
+		if (curr_state == 0)
 			return (1);
-		if (prev_state != 0 && curr_state == 0)
-			return (0);
-		return (-1);
+		return (0);
 	}
 
 	return (-1);
 }
+
 
 /**
  * execute_command - Execute a command inside a child proccess.
