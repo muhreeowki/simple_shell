@@ -51,6 +51,10 @@ char *_strcat(char *s1, char *s2)
 	char *newstr;
 
 	i = j = len1 = len2 = 0;
+	if (s1 == NULL)
+		return (s2);
+	if (s2 == NULL)
+		return s1;
 
 	while (s1[len1] != '\0')
 		len1++;
