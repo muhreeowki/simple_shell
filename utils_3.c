@@ -35,7 +35,7 @@ void reverse(char *string, int len)
 
 char* _itoa(int num, int base)
 {
-    int i = 0, rem, test = num, size;
+    int i = 0, rem, test = num, size = 0;
     char *str;
 
     while (test > 0)

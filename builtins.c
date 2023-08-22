@@ -40,7 +40,7 @@ int _cd(char **args, char *name, int *count)
 		newcwd = _getenv("HOME");
 
 	if (chdir(newcwd) == -1) 
-	    	return (handle_errors("chdir", 2));
+	    	return (handle_errors(NULL, 2));
 
 	setenv("PWD", getcwd(NULL, 0), 1);
 	setenv("OLDPWD", oldcwd, 1);
