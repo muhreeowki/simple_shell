@@ -45,7 +45,7 @@ char *_getenv(char *var);
 
 /* executor functions */
 int executor(cmd *head, char **arguments, char *errmsg, int *count);
-int check_sep(char *sep, int curr_state, int prev_state);
+int check_sep(char *prev_sep, char *next_sep, int curr_state, int prev_state);
 void execute_command(cmd *command, int *prev_status, int *curr_status);
 cmd *init_builtins(void);
 

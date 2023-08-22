@@ -19,18 +19,6 @@ int executor(cmd *head, char **paths, char *name, int *count)
 
 	while (command != NULL)
 	{
-		prev_sep = curr_sep;
-		curr_sep = command->separator;
-
-		switch (check_sep(prev_sep, curr_status, prev_status))
-		{
-		case -1:
-			return(curr_status);
-		case 1:
-			command = command->next;
-			continue;
-		}
-
 		if (!find_program(command, paths)) /* Find the program */
 		{
 			msg_pt1 = _strcat(name, _strcat(_itoa(*count, 10), ": "));
@@ -48,6 +36,18 @@ int executor(cmd *head, char **paths, char *name, int *count)
 
 		if (command->builtin == 1) /* Execute Program via exec */
 			execute_command(command, &curr_status, &prev_status);
+
+		prev_sep = curr_sep;
+		curr_sep = command->separator;
+
+		switch (check_sep(prev_sep, curr_sep, curr_status, prev_status))
+		{
+		case -1:
+			return(curr_status);
+		case 1:
+			command = command->next;
+			continue;
+		}
 
 		command = command->next;
 		(*count)++;
