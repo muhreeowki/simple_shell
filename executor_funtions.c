@@ -31,12 +31,17 @@ cmd *find_program(cmd *command, char **paths)
 			return (command);
 		}
 	}
-
-	if (stat(command->name, &st) == 0)
+	
+	if (command->name[0] == '/' || (command->name[0] == '.' && command->name[1] == '/'))
 	{
-		command->builtin = 1;
-		return (command);
+		if (stat(command->name, &st) == 0)
+		{
+			command->builtin = 1;
+			return (command);
+		}
 	}
+	if (paths[0][0] == '_')
+		return (NULL);
 
 	for (i = 0; paths[i] != NULL; i++)
 	{

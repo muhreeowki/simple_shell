@@ -123,18 +123,19 @@ int _unsetenv(char **args, char *name, int *count, int *status)
 			if (_strcmp(environ[i], whole_var) == 0)
 			{
 				target_index = i;
-				free(environ[target_index]);
+				/*free(environ[target_index]);*/
 				break;
 			}
 		}
 
 		if (target_index >= 0)
 		{
-			/* Shift the rest of the environment variables to close the gap*/
-			for (i = target_index; environ[i] != NULL; i++)
+			for (i = target_index ; environ[i] != NULL; i++)
 				environ[i] = environ[i + 1];
+		/*	for (i = target_index + 1; environ[i] != NULL; i++)
+				environ[i - 1] = environ[i];*/
 			return (0);
-		}
+		} 
 	}
 
 	return(handle_errors(errmsg, 2));

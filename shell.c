@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 int user_mode(char **argv)
 {
 	size_t size = MAX_INPUT_SIZE;
-	char *input, **paths, **lines, nl = '\n', *program_name = _strcat(argv[0], ": ");
+	char *input, **paths, **lines, nl = '\n', *program_name = _strcat(argv[0], ": "), *empty = "_";
 	cmd *head = NULL;
 	int i, prompt_mode, command_count = 1, exit_status = 0;
 
@@ -59,9 +59,14 @@ int user_mode(char **argv)
 		for (i = 0; lines[i]; i++)
 		{
 			paths = get_paths();
+			if (paths == NULL)
+				paths = &empty;
 			head = parser(lines[i]);
 			exit_status = executor(head, paths, program_name, &command_count, &exit_status);
-			handle_free(NULL, head, paths);
+			if (paths[0][0] == '_')
+				handle_free(NULL, head, NULL);
+			else	
+				handle_free(NULL, head, paths);
 		}
 		free(input);
 	}

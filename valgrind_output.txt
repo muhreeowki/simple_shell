@@ -1,87 +1,149 @@
-==178761== Memcheck, a memory error detector
-==178761== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==178761== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==178761== Command: ./hsh
-==178761== Parent PID: 178419
-==178761== 
-==178761== Conditional jump or move depends on uninitialised value(s)
-==178761==    at 0x10B2FC: check_empty (utils_1.c:145)
-==178761==    by 0x10AD19: user_mode (shell.c:52)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== Conditional jump or move depends on uninitialised value(s)
-==178761==    at 0x10B1B4: _strdup (utils_1.c:101)
-==178761==    by 0x10A957: _strtok (parser_functions.c:108)
-==178761==    by 0x10AD40: user_mode (shell.c:58)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== Conditional jump or move depends on uninitialised value(s)
-==178761==    at 0x10ADC8: user_mode (shell.c:59)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== 
-==178761== HEAP SUMMARY:
-==178761==     in use at exit: 274 bytes in 15 blocks
-==178761==   total heap usage: 20 allocs, 5 frees, 8,618 bytes allocated
-==178761== 
-==178761== 3 bytes in 1 blocks are definitely lost in loss record 1 of 7
-==178761==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==178761==    by 0x10B1C5: _strdup (utils_1.c:104)
-==178761==    by 0x10A4D2: tokenize (parser_functions.c:15)
-==178761==    by 0x10A2CF: parser (parser.c:18)
-==178761==    by 0x10AD75: user_mode (shell.c:62)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== 4 bytes in 1 blocks are still reachable in loss record 2 of 7
-==178761==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==178761==    by 0x10B1C5: _strdup (utils_1.c:104)
-==178761==    by 0x10A957: _strtok (parser_functions.c:108)
-==178761==    by 0x10AD40: user_mode (shell.c:58)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== 9 bytes in 1 blocks are still reachable in loss record 3 of 7
-==178761==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==178761==    by 0x10B0CE: _strcat (utils_1.c:65)
-==178761==    by 0x10AC60: user_mode (shell.c:28)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== 24 bytes in 1 blocks are still reachable in loss record 4 of 7
-==178761==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==178761==    by 0x10A984: _strtok (parser_functions.c:111)
-==178761==    by 0x10AD40: user_mode (shell.c:58)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== 25 bytes in 5 blocks are definitely lost in loss record 5 of 7
-==178761==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==178761==    by 0x10B0CE: _strcat (utils_1.c:65)
-==178761==    by 0x10A0C5: find_program (executor_funtions.c:43)
-==178761==    by 0x109DD7: executor (executor.c:34)
-==178761==    by 0x10AD91: user_mode (shell.c:63)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== 90 bytes in 5 blocks are definitely lost in loss record 6 of 7
-==178761==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==178761==    by 0x10B0CE: _strcat (utils_1.c:65)
-==178761==    by 0x10A0F0: find_program (executor_funtions.c:43)
-==178761==    by 0x109DD7: executor (executor.c:34)
-==178761==    by 0x10AD91: user_mode (shell.c:63)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== 119 bytes in 1 blocks are definitely lost in loss record 7 of 7
-==178761==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==178761==    by 0x10B1C5: _strdup (utils_1.c:104)
-==178761==    by 0x10A957: _strtok (parser_functions.c:108)
-==178761==    by 0x109CF2: get_paths (env_functions.c:40)
-==178761==    by 0x10AD52: user_mode (shell.c:61)
-==178761==    by 0x10AC06: main (shell.c:11)
-==178761== 
-==178761== LEAK SUMMARY:
-==178761==    definitely lost: 237 bytes in 12 blocks
-==178761==    indirectly lost: 0 bytes in 0 blocks
-==178761==      possibly lost: 0 bytes in 0 blocks
-==178761==    still reachable: 37 bytes in 3 blocks
-==178761==         suppressed: 0 bytes in 0 blocks
-==178761== 
-==178761== Use --track-origins=yes to see where uninitialised values come from
-==178761== For lists of detected and suppressed errors, rerun with: -s
-==178761== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)
+==225730== Memcheck, a memory error detector
+==225730== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==225730== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==225730== Command: ./hsh
+==225730== Parent PID: 192110
+==225730== 
+==225730== Conditional jump or move depends on uninitialised value(s)
+==225730==    at 0x10B396: check_empty (utils_1.c:145)
+==225730==    by 0x10AD9D: user_mode (shell.c:52)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== Conditional jump or move depends on uninitialised value(s)
+==225730==    at 0x10B24E: _strdup (utils_1.c:101)
+==225730==    by 0x10A9DB: _strtok (parser_functions.c:108)
+==225730==    by 0x10ADC4: user_mode (shell.c:58)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== Conditional jump or move depends on uninitialised value(s)
+==225730==    at 0x10AE53: user_mode (shell.c:59)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== Conditional jump or move depends on uninitialised value(s)
+==225730==    at 0x10A1DA: find_program (executor_funtions.c:41)
+==225730==    by 0x109E49: executor (executor.c:34)
+==225730==    by 0x10AE1C: user_mode (shell.c:63)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 
+==225730== HEAP SUMMARY:
+==225730==     in use at exit: 3,453 bytes in 91 blocks
+==225730==   total heap usage: 104 allocs, 13 frees, 20,461 bytes allocated
+==225730== 
+==225730== 6 bytes in 1 blocks are still reachable in loss record 1 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B25F: _strdup (utils_1.c:104)
+==225730==    by 0x10A9DB: _strtok (parser_functions.c:108)
+==225730==    by 0x10ADC4: user_mode (shell.c:58)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 6 bytes in 2 blocks are definitely lost in loss record 2 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B765: _itoa (utils_3.c:47)
+==225730==    by 0x109E67: executor (executor.c:36)
+==225730==    by 0x10AE1C: user_mode (shell.c:63)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 9 bytes in 1 blocks are still reachable in loss record 3 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B168: _strcat (utils_1.c:65)
+==225730==    by 0x10ACE4: user_mode (shell.c:28)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 10 bytes in 2 blocks are definitely lost in loss record 4 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B168: _strcat (utils_1.c:65)
+==225730==    by 0x109E76: executor (executor.c:36)
+==225730==    by 0x10AE1C: user_mode (shell.c:63)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 16 bytes in 1 blocks are still reachable in loss record 5 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10AA08: _strtok (parser_functions.c:111)
+==225730==    by 0x10ADC4: user_mode (shell.c:58)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 24 bytes in 2 blocks are definitely lost in loss record 6 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B168: _strcat (utils_1.c:65)
+==225730==    by 0x109E8B: executor (executor.c:36)
+==225730==    by 0x10AE1C: user_mode (shell.c:63)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 26 bytes in 2 blocks are indirectly lost in loss record 7 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B25F: _strdup (utils_1.c:104)
+==225730==    by 0x10A9DB: _strtok (parser_functions.c:108)
+==225730==    by 0x10ADC4: user_mode (shell.c:58)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 30 bytes in 2 blocks are definitely lost in loss record 8 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B168: _strcat (utils_1.c:65)
+==225730==    by 0x109EA6: executor (executor.c:37)
+==225730==    by 0x10AE1C: user_mode (shell.c:63)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 30 bytes in 3 blocks are definitely lost in loss record 9 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B25F: _strdup (utils_1.c:104)
+==225730==    by 0x10A556: tokenize (parser_functions.c:15)
+==225730==    by 0x10A353: parser (parser.c:18)
+==225730==    by 0x10ADF9: user_mode (shell.c:62)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 50 bytes in 2 blocks are definitely lost in loss record 10 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B168: _strcat (utils_1.c:65)
+==225730==    by 0x109EBD: executor (executor.c:38)
+==225730==    by 0x10AE1C: user_mode (shell.c:63)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 74 (48 direct, 26 indirect) bytes in 2 blocks are definitely lost in loss record 11 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10AA08: _strtok (parser_functions.c:111)
+==225730==    by 0x10ADC4: user_mode (shell.c:58)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 80 bytes in 20 blocks are definitely lost in loss record 12 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B168: _strcat (utils_1.c:65)
+==225730==    by 0x10A13B: find_program (executor_funtions.c:43)
+==225730==    by 0x109E49: executor (executor.c:34)
+==225730==    by 0x10AE1C: user_mode (shell.c:63)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 298 bytes in 20 blocks are definitely lost in loss record 13 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B168: _strcat (utils_1.c:65)
+==225730==    by 0x10A166: find_program (executor_funtions.c:43)
+==225730==    by 0x109E49: executor (executor.c:34)
+==225730==    by 0x10AE1C: user_mode (shell.c:63)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 357 bytes in 3 blocks are definitely lost in loss record 14 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B25F: _strdup (utils_1.c:104)
+==225730==    by 0x10A9DB: _strtok (parser_functions.c:108)
+==225730==    by 0x109D5D: get_paths (env_functions.c:40)
+==225730==    by 0x10ADD6: user_mode (shell.c:61)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== 2,463 bytes in 28 blocks are definitely lost in loss record 15 of 15
+==225730==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==225730==    by 0x10B168: _strcat (utils_1.c:65)
+==225730==    by 0x109BC2: _env (builtins.c:182)
+==225730==    by 0x109F4F: executor (executor.c:46)
+==225730==    by 0x10AE1C: user_mode (shell.c:63)
+==225730==    by 0x10AC8A: main (shell.c:11)
+==225730== 
+==225730== LEAK SUMMARY:
+==225730==    definitely lost: 3,396 bytes in 86 blocks
+==225730==    indirectly lost: 26 bytes in 2 blocks
+==225730==      possibly lost: 0 bytes in 0 blocks
+==225730==    still reachable: 31 bytes in 3 blocks
+==225730==         suppressed: 0 bytes in 0 blocks
+==225730== 
+==225730== Use --track-origins=yes to see where uninitialised values come from
+==225730== For lists of detected and suppressed errors, rerun with: -s
+==225730== ERROR SUMMARY: 22 errors from 15 contexts (suppressed: 0 from 0)

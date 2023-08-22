@@ -10,16 +10,18 @@
 char *_getenv(char *var)
 {
 	int i, j;
+	if (environ == NULL || environ[0] == NULL)
+		return (NULL);
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		for (j = 0; *(environ[i] + j) != '=' && var[j] != '\0'; j++)
+		for (j = 0; /**(environ[i] + j) != '='||*/ var[j] != '\0'; j++)
 		{
 			if (var[j] != *(environ[i] + j))
 				break;
 		}
 
-		if (var[j] == '\0' && *(environ[i] + j) == '=')
+		if (var[j] == '\0' && *(environ[i] + j) == '=' && *(environ[i] + j + 1) != '\0')
 			return ((environ[i] + j + 1));
 	}
 
@@ -34,10 +36,11 @@ char *_getenv(char *var)
  */
 char **get_paths(void)
 {
-	char *path_string, **paths;
+	char *path_string, **paths = NULL;
 
 	path_string = _getenv("PATH");
-	paths = _strtok(path_string, ':');
+	if (path_string)
+		paths = _strtok(path_string, ':');
 
 	return (paths);
 }
