@@ -75,40 +75,37 @@ int user_mode(char **argv)
  */
 int file_mode(char **argv)
 {
-	int fd, i, j, command_count, exitstatus;
+	int fd, j, command_count, exitstatus = 0;
 	size_t size = MAX_INPUT_SIZE;
 	char *input, **paths, **lines, *program_name = argv[0];
 	cmd *head = NULL;
 
-	for (i = 1, j = 0; argv[i] != NULL; i++)
+	/* Open the file */
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+		return (handle_errors(NULL, exitstatus));
+
+	/* allocate memory */
+	input = malloc(sizeof(char) * size);
+	if (input == NULL)
+		return (handle_errors(NULL, exitstatus));
+
+	/* Read line by line and execute each command */
+	while (read(fd, input, size))
 	{
-		/* Open the file */
-		fd = open(argv[1], O_RDONLY);
-		if (fd == -1)
-			return (handle_errors(NULL, exitstatus));
+		if (check_empty(input) == -1)
+			continue;
 
-		/* allocate memory */
-		input = malloc(sizeof(char) * size);
-		if (input == NULL)
-			return (handle_errors(NULL, exitstatus));
-
-		/* Read line by line and execute each command */
-		while (read(fd, input, size))
+		lines = _strtok(input, '\n');
+		for (j = 0; lines[j]; j++)
 		{
-			if (check_empty(input) == -1)
-				continue;
-
-			lines = _strtok(input, '\n');
-			for (j = 0; lines[j]; j++)
-			{
-				paths = get_paths();
-				head = parser(lines[j]);
-				exitstatus = executor(head, paths, program_name, &command_count);
-				handle_free(NULL, head, paths);
-			}
+			paths = get_paths();
+			head = parser(lines[j]);
+			exitstatus = executor(head, paths, program_name, &command_count);
+			handle_free(NULL, head, paths);
 		}
-		free(input);
 	}
+	free(input);
 
 	return (0);
 }

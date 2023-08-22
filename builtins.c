@@ -167,13 +167,17 @@ int _exit2(char **args, char *name, int *count)
  */
 int _env(char **args, char *name, int *count)
 {
+	char *string;
 	int i;
 	(void)args;
 	(void)name;
 	(void)count;
 
 	for (i = 0; environ[i]; i++)
-		printf("%s\n", environ[i]);
+	{
+		string = _strcat(environ[i], "\n");
+		write(STDOUT_FILENO, string, _strlen(string));
+	}
 
 	return (0);
 }
