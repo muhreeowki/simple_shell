@@ -15,7 +15,7 @@ cmd *parser(char *input)
 	int i = 0, start = 0;
 
 	remove_nl(input);
-	tokens = tokenize(input, ' ');
+	tokens = tokenize(input);
 	arguments = (tokens + start);
 
 	while (1)

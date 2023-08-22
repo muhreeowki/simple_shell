@@ -37,7 +37,7 @@ char **get_paths(void)
 	char *path_string, **paths;
 
 	path_string = _getenv("PATH");
-	paths = tokenize(path_string, ':');
+	paths = _strtok(path_string, ':');
 
 	return (paths);
 }

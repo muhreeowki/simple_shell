@@ -27,8 +27,9 @@ int user_mode(char **argv)
 	size_t size = MAX_INPUT_SIZE;
 	char *input, **paths, **lines, nl = '\n', *program_name = _strcat(argv[0], ": ");
 	cmd *head = NULL;
-	int i, prompt_mode, command_count = 1, exit_status;
+	int i, prompt_mode, command_count = 1, exit_status = 0;
 
+	(void)argv;
 	while (1)
 	{
 		input = malloc(sizeof(char) * size);
@@ -54,7 +55,7 @@ int user_mode(char **argv)
 			continue;
 		}
 
-		lines = tokenize(input, '\n');
+		lines = _strtok(input, '\n');
 		for (i = 0; lines[i]; i++)
 		{
 			paths = get_paths();
@@ -97,7 +98,7 @@ int file_mode(char **argv)
 			if (check_empty(input) == -1)
 				continue;
 
-			lines = tokenize(input, '\n');
+			lines = _strtok(input, '\n');
 			for (j = 0; lines[j]; j++)
 			{
 				paths = get_paths();

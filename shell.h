@@ -35,7 +35,8 @@ int file_mode(char **argv);
 /* parser functions */
 cmd *parser(char *input);
 cmd *find_program(cmd *command, char **paths);
-char **tokenize(char *input, char delim);
+char **_strtok(char *input, char delim);
+char **tokenize(char *input);
 cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep);
 
 /* env handling functions */
