@@ -15,8 +15,6 @@ void free_cmdlist(cmd *head)
 	if (ptr == NULL)
 		return;
 
-	free(ptr->arguments);
-
 	while (ptr)
 	{
 		next = ptr->next;

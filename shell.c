@@ -68,6 +68,7 @@ int user_mode(char **argv)
 			else	
 				handle_free(NULL, head, paths);
 		}
+		free(lines);
 		free(input);
 	}
 	free(program_name);
@@ -119,11 +120,11 @@ int file_mode(char **argv)
 		}
 	}
 
-	free(input);
 	free(msg1);
 	free(msg2);
 	free(msg3);
 	free(msg4);
+	free(input);
 	free(lines);
 	free(program_name);
 	close(fd);
