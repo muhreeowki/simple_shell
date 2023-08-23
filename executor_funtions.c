@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "builtins.h"
 
 /**
  * find_program - searches through the PATH to find
@@ -13,16 +14,7 @@ cmd *find_program(cmd *command, char **paths)
 {
 	int i;
 	struct stat st;
-	char *filepath,
-	     *patharray[5] = {NULL, "/", NULL, NULL, NULL};
-
-	cmd builtins[] = {
-		{0, "cd", NULL, NULL, _cd, NULL}, {0, "env", NULL, NULL, _env, NULL},
-		{0, "setenv", NULL, NULL, _setenv, NULL},
-		{0, "unsetenv", NULL, NULL, _unsetenv, NULL},
-		{0, "exit", NULL, NULL, _exit2, NULL}, {0, "alias", NULL, NULL, NULL, NULL},
-		{0, NULL, NULL, NULL, NULL, NULL},
-	};
+	char *filepath, *patharray[5] = {NULL, "/", NULL, NULL, NULL};
 
 	for (i = 0; builtins[i].name != NULL; i++)
 	{
@@ -33,8 +25,8 @@ cmd *find_program(cmd *command, char **paths)
 			return (command);
 		}
 	}
-	
-	if (command->name[0] == '/' || (command->name[0] == '.' && command->name[1] == '/'))
+	if (command->name[0] == '/' ||
+			(command->name[0] == '.' && command->name[1] == '/'))
 	{
 		if (stat(command->name, &st) == 0)
 		{
@@ -42,6 +34,7 @@ cmd *find_program(cmd *command, char **paths)
 			return (command);
 		}
 	}
+
 	if (paths[0][0] == '_')
 		return (NULL);
 
@@ -50,7 +43,6 @@ cmd *find_program(cmd *command, char **paths)
 		patharray[0] = paths[i];
 		patharray[2] = command->name;
 		filepath = _strcat2(patharray);
-
 		if (stat(filepath, &st) == 0)
 		{
 			command->name = filepath;
@@ -59,7 +51,6 @@ cmd *find_program(cmd *command, char **paths)
 		}
 		free(filepath);
 	}
-	
 	return (NULL);
 }
 
