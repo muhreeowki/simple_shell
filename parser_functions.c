@@ -127,7 +127,7 @@ char **_strtok(char *input, const char delim)
 		return (NULL);
 	}
 
-	for (; string[i] != '\0'; i++)
+	for (; string[i]; i++)
 	{
 		if (flag == 1)
 		{
