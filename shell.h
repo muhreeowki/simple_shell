@@ -36,8 +36,10 @@ int file_mode(char **argv);
 cmd *parser(char *input);
 cmd *find_program(cmd *command, char **paths);
 char **_strtok(char *input, char delim);
-char **tokenize(char *input);
 cmd *append_cmd(cmd *head, char *cmdname, char **arguments, char *sep);
+int divide_sep(char *string, char **arguments_list,
+	char **separators, char *substring, int *i, int *n);
+char **tokenize(char *input);
 
 /* env handling functions */
 char **get_paths(void);

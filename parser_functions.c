@@ -5,7 +5,6 @@
  * (similar to _strtok)
  *
  * @input: pointer to string
- * @delim: delimiter to divide the string by
  *
  * Return: Pointer to list of string
  */
@@ -14,7 +13,7 @@ char **tokenize(char *input)
 	int i = 0, count = 0, n = 0, flag = 1, start = 0;
 	char **arguments_list = NULL, *substring = NULL, *string = input;
 	char *separators[] = {";", "&&", "||"};
-	
+
 	count = _strlen(string);
 	arguments_list = malloc(sizeof(char *) * (count));
 	if (arguments_list == NULL)
@@ -39,59 +38,72 @@ char **tokenize(char *input)
 			}
 		}
 
-		switch(string[i])
-		{
-			case (' '):
-			string[i] = '\0';
-			if (string[i - 1] > 32 && string[i - 1] < 127)
-				arguments_list[n++] = substring;
-			substring = (string + i + 1);
-			flag = 1;
-			break;
+		if (flag == 1)
+			continue;
 
-			case (';'): 
-			string[i] = '\0';
-			if (string[i - 1] > 32 && string[i - 1] < 127)
-				arguments_list[n++] = substring;
-			substring = (string + i + 1);
-			arguments_list[n++] = separators[0];
-			flag = 1;
-			break;
-
-			case ('&'):
-			if (string[i + 1] == '&')
-			{
-				string[i++] = '\0';
-				string[i] = '\0';
-				if (string[i - 2] > 32 && string[i - 2] < 127)
-					arguments_list[n++] = substring;
-				substring = (string + i + 1);
-				arguments_list[n++] = separators[1];
-				flag = 1;
-			}
-			break;
-
-			case ('|'):
-			if (string[i + 1] == '|')
-			{
-				string[i++] = '\0';
-				string[i] = '\0';
-				if (string[i - 2] > 32 && string[i - 2] < 127)
-					arguments_list[n++] = substring;
-				substring = (string + i + 1);
-				arguments_list[n++] = separators[2];
-				flag = 1;
-			}
-			break;
-		}
+		flag = divide_sep(string, arguments_list, separators, substring, &i, &n);
 	}
-
-	/*if ((substring[0] > 32 && substring[0] < 127))*/
 	if (flag == 0)
 		arguments_list[n] = substring;
 
 	return (arguments_list);
 }
+
+/**
+ * divide_sep - helper function for tokenize
+ *
+ * @string: pointer to string
+ * @arguments_list: pointer to a list of arguments
+ * @separators: list of separators
+ * @substring: pointer to a string
+ * @i: index
+ * @n: index
+ *
+ * Return: Pointer to list of string
+ */
+int divide_sep(char *string, char **arguments_list,
+		char **separators, char *substring, int *i, int *n)
+{
+	if (string[*i] == ' ')
+	{
+		string[*i] = '\0';
+		if (string[*i - 1] > 32 && string[*i - 1] < 127)
+			arguments_list[(*n)++] = substring;
+		substring = (string + *i + 1);
+		return (1);
+	}
+	if (string[*i] == ';')
+	{
+		string[*i] = '\0';
+		if (string[*i - 1] > 32 && string[*i - 1] < 127)
+			arguments_list[(*n)++] = substring;
+		arguments_list[(*n)++] = separators[0];
+		substring = (string + *i + 1);
+		return (1);
+	}
+	if (string[*i] == '&' && string[*i + 1] == '&')
+	{
+		string[(*i)++] = '\0';
+		string[*i] = '\0';
+		if (string[*i - 2] > 32 && string[*i - 2] < 127)
+			arguments_list[(*n)++] = substring;
+		arguments_list[(*n)++] = separators[1];
+		substring = (string + *i + 1);
+		return (1);
+	}
+	if (string[*i] == '|' && string[*i + 1] == '|')
+	{
+		string[*i] = '\0';
+		string[*i + 1] = '\0';
+		if (string[*i - 2] > 32 && string[*i - 2] < 127)
+			arguments_list[(*n)++] = substring;
+		arguments_list[(*n)++] = separators[2];
+		substring = (string + *i + 2);
+		return (1);
+	}
+	return (0);
+}
+
 
 /**
  * _strtok - divides a string input into a list of tokens/words
@@ -106,7 +118,7 @@ char **_strtok(char *input, const char delim)
 {
 	int i = 0, count = 0, n = 0, flag = 1, start = 0;
 	char **arguments_list = NULL, *substring = NULL, *string = input;
-	
+
 	count = count_tokens(string, delim);
 	arguments_list = malloc(sizeof(char *) * (count + 1));
 	if (arguments_list == NULL)
