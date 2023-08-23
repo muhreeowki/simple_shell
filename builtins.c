@@ -39,8 +39,8 @@ int _cd(char **args, char *name, int *count, int *status)
 	if (chdir(newcwd) == -1) 
 	    	return (handle_errors(NULL, 2));
 
-	setenv("OLDPWD", oldcwd, 1);
-	setenv("PWD", newcwd, 1);
+	/*setenv("OLDPWD", oldcwd, 1);*/
+	/*setenv("PWD", newcwd, 1);*/
 	free(oldcwd);
 	(void)status;
 	free(msg);
