@@ -11,7 +11,7 @@
 cmd *parser(char *input)
 {
 	cmd *head = NULL;
-	char **arguments, **tokens, *separator;
+	char **arguments = NULL, **tokens = NULL, *separator = NULL;
 	int i = 0, start = 0;
 
 	remove_nl(input);

@@ -20,7 +20,7 @@ void free_cmdlist(cmd *head)
 	while (ptr)
 	{
 		next = ptr->next;
-		/*free(ptr->separator);*/
+		free(ptr->separator);
 		free(ptr);
 		ptr = next;
 	}

@@ -118,12 +118,14 @@ int file_mode(char **argv)
 			handle_free(NULL, head, paths);
 		}
 	}
+
 	free(input);
 	free(msg1);
 	free(msg2);
 	free(msg3);
 	free(msg4);
+	free(lines);
 	free(program_name);
-
+	close(fd);
 	return (0);
 }
