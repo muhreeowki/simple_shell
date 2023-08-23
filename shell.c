@@ -42,7 +42,7 @@ int user_mode(char **argv)
 			continue;
 		prompt_mode = isatty(STDIN_FILENO);
 		if (prompt_mode == 1)
-			write(STDOUT_FILENO, "$ ", 2); /* Prompt */
+			write(STDOUT_FILENO, "($) ", 4); /* Prompt */
 		if (_getline(STDIN_FILENO, &input, &size) == -1)
 		{
 			if (prompt_mode == 1)
