@@ -25,9 +25,10 @@ int main(int argc, char **argv)
 int user_mode(char **argv)
 {
 	size_t size = MAX_INPUT_SIZE;
-	char *input, **paths, **lines, nl = '\n', *program_name = _strcat(argv[0], ": "), *empty = "_";
 	cmd *head = NULL;
-	int i, prompt_mode, command_count = 1, exit_status = 0;
+	int i = 0, prompt_mode = 0, command_count = 1, exit_status = 0;
+	char *input = NULL, **paths = NULL, **lines = NULL, nl = '\n',
+	     *program_name = _strcat(argv[0], ": "), *empty = "_";
 
 	(void)argv;
 	while (1)
