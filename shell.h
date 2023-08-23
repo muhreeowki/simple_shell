@@ -71,7 +71,7 @@ char *_strcat2(char **strings);
 /* memory management */
 void free_cmdlist(cmd *head);
 void handle_free(char *input, cmd *head, char **paths);
-
+void free_all(char *input, char **lines, char *program_name, char *errmsg1, char *msg);
 /* builtins functions */
 int _cd(char **args, char *name, int *count, int *status);
 int _exit2(char **args, char *name, int *count, int *status);

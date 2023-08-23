@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * _strcmp - Compares two strings
+ * _strcmp - Compares two strings.
  *
- * @s1: pointer to string
- * @s2: pointer to string
+ * @s1: Pointer to the first string
+ * @s2: Pointer to the second string
  *
- * Return: Pointer to concatanted string
+ * Return: 0 if strings are equal, -1 otherwise
  */
 int _strcmp(char *s1, char *s2)
 {
@@ -39,14 +39,12 @@ int _strcmp(char *s1, char *s2)
 }
 
 
-
 /**
- * _strcat - Concatantes two strings together.
+ * _strcat2 - Concatenates multiple strings together.
  *
- * @s1: pointer to string
- * @s2: pointer to string
+ * @strings: Array of strings to concatenate
  *
- * Return: Pointer to a new concatanted string
+ * Return: Pointer to the concatenated string, or NULL on failure
  */
 char *_strcat2(char **strings)
 {
@@ -70,7 +68,7 @@ char *_strcat2(char **strings)
 
 	for (i = 0; strings[i] != NULL; i++)
 	{
-		for(j = 0; strings[i][j] != '\0'; j++)
+		for (j = 0; strings[i][j] != '\0'; j++)
 			newstr[n++] = strings[i][j];
 	}
 
@@ -96,7 +94,7 @@ char *_strcat(char *s1, char *s2)
 	if (s1 == NULL)
 		return (s2);
 	if (s2 == NULL)
-		return s1;
+		return (s1);
 
 	while (s1[len1] != '\0')
 		len1++;

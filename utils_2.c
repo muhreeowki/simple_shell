@@ -57,8 +57,8 @@ int _strlen(const char *s)
 {
 	int len;
 
-/*	if (s == NULL)
-		return (0);*/
+	if (s == NULL)
+		return (0);
 
 	for (len = 0; s[len] != 0; len++)
 		;
@@ -70,7 +70,7 @@ int _strlen(const char *s)
  * handle_errors - helper function to handle errors
  *
  * @message: optional error message
- *
+ * @status: exit status
  * Return: -1.
  */
 int handle_errors(char *message, int status)
