@@ -32,14 +32,15 @@ int user_mode(char **argv)
 	size_t size = MAX_INPUT_SIZE;
 	cmd *head = NULL;
 	int i = 0, prompt_mode = 0, count = 1, exit_status = 0;
-	char *input = NULL, **paths = NULL, **lines = NULL, nl = '\n',
-	     *name = _strcat(argv[0], ": "), *empty = "_";
+	char *input = NULL, **paths = NULL, **lines = &input, nl = '\n';
+	char *name = _strcat(argv[0], ": "), *empty = "_";
 	(void)argv;
 	while (1)
 	{
 		input = malloc(sizeof(char) * size);
 		if (input == NULL)
 			continue;
+		memset(input, 0, size);
 		prompt_mode = isatty(STDIN_FILENO);
 		if (prompt_mode == 1)
 			write(STDOUT_FILENO, "($) ", 4); /* Prompt */
@@ -55,7 +56,7 @@ int user_mode(char **argv)
 			free(input);
 			continue;
 		}
-		lines = _strtok(input, '\n');
+		lines = _strtok(input, nl);
 		while (lines[i])
 		{
 			paths = get_paths();

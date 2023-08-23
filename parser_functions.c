@@ -127,6 +127,7 @@ char **_strtok(char *input, const char delim)
 		perror(NULL);
 		return (NULL);
 	}
+	memset(arguments_list, 0, sizeof(char *) * (count + 1));
 
 	while (string[i] != 0)
 	{
@@ -166,6 +167,9 @@ int count_tokens(char *input, char delim)
 {
 	int i = 0, count = 1;
 	char *string = NULL;
+	
+	if (input == NULL)
+		return (0);
 
 	string = input;
 	while (string[i] != '\0')
