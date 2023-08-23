@@ -127,7 +127,7 @@ char **_strtok(char *input, const char delim)
 		return (NULL);
 	}
 
-	for (i = 0; string[i] != '\0'; i++)
+	for (; string[i] != '\0'; i++)
 	{
 		if (flag == 1)
 		{
@@ -165,7 +165,7 @@ int count_tokens(char *input, char delim)
 {
 	int i = 0, count = 1;
 
-	for (i = 0; input[i] != '\0'; i++)
+	for (; input[i] != '\0'; i++)
 	{
 		if (input[i] == delim)
 			count++;

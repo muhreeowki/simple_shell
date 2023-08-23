@@ -96,10 +96,10 @@ int check_empty(char *string)
 {
 	int i = 0, isempty = -1;
 
-	if (string == NULL)/* || *string == '\0' || *string == '\n')*/
+	if (string == NULL)
 		return (-1);
 
-	for (i = 0; string[i] != '\0'; i++)
+	for (; string[i] != '\0' && string[i] != '\n'; i++)
 	{
 		if (string[i] > 32 && string[i] < 127)
 			isempty = 0;

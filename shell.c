@@ -56,7 +56,7 @@ int user_mode(char **argv)
 			continue;
 		}
 		lines = _strtok(input, '\n');
-		for (i = 0; lines[i]; i++)
+		for (; lines[i]; i++)
 		{
 			paths = get_paths();
 			paths = paths == NULL ? &empty : paths;
