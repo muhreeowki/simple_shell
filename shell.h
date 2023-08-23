@@ -15,6 +15,17 @@
 #define MAX_INPUT_SIZE 4096
 
 /* our structs */
+
+/**
+ * struct cmd - this is a struct to hold commands
+ * @builtin: shows if command is builtin or not
+ * @name: command name
+ * @arguments: list of command args
+ * @separator: separator after command
+ * @function: function associated with command name (only for builtins)
+ * @next: next command
+ *
+ */
 typedef struct cmd
 {
 	int builtin;
@@ -46,10 +57,11 @@ char **get_paths(void);
 char *_getenv(char *var);
 
 /* executor functions */
-int executor(cmd *head, char **paths, char *name, int *count, int *exit_status);
+int executor(cmd *head, char **paths, char *name, int *count,
+		int *exit_status);
 int check_sep(char *prev_sep, int curr_state, int prev_state);
 void execute_command(cmd *command, int *prev_status, int *curr_status);
-cmd *init_builtins(void);
+int check_builtins(cmd *command);
 
 /* utility functions */
 ssize_t _getline(int fd, char **buff, size_t *size);
@@ -64,14 +76,15 @@ int _strlen(const char *s);
 void remove_nl(char *input);
 int check_empty(char *string);
 int _atoi(char *s);
-char* _itoa(int num, int base);
+char *_itoa(int num, int base);
 void reverse(char *string, int len);
 char *_strcat2(char **strings);
 
 /* memory management */
 void free_cmdlist(cmd *head);
 void handle_free(char *input, cmd *head, char **paths);
-void free_all(char *input, char **lines, char *program_name, char *errmsg1, char *msg);
+void free_all(char *input, char **lines,
+		char *program_name, char *errmsg1, char *msg);
 /* builtins functions */
 int _cd(char **args, char *name, int *count, int *status);
 int _exit2(char **args, char *name, int *count, int *status);
