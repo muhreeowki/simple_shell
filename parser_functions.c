@@ -119,6 +119,7 @@ char **_strtok(char *input, const char delim)
 	int i = 0, count = 0, n = 0, flag = 1, start = 0;
 	char **arguments_list = NULL, *substring = NULL, *string = input;
 
+	/*string = input;*/
 	count = count_tokens(string, delim);
 	arguments_list = malloc(sizeof(char *) * (count + 1));
 	if (arguments_list == NULL)
@@ -164,10 +165,12 @@ char **_strtok(char *input, const char delim)
 int count_tokens(char *input, char delim)
 {
 	int i = 0, count = 1;
+	char *string = NULL;
 
-	for (; input[i] != '\0'; i++)
+	string = input;
+	while (string[i] != '\0')
 	{
-		if (input[i] == delim)
+		if (string[i++] == delim)
 			count++;
 	}
 

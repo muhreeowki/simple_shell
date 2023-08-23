@@ -11,7 +11,7 @@
  */
 cmd *find_program(cmd *command, char **paths)
 {
-	int i;
+	int i = 0;
 	struct stat st;
 	char *filepath, *patharray[5] = {NULL, "/", NULL, NULL, NULL};
 
