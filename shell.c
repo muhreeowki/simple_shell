@@ -3,6 +3,9 @@
 /**
  * main - This is a UNIX command line interpreter.
  *
+ * @argc: number of command line arguments
+ * @argv: list of command line arguments
+ *
  * Return: nothing.
  */
 int main(int argc, char **argv)
@@ -20,15 +23,17 @@ int main(int argc, char **argv)
  * user_mode - This is the interactive user mode
  * for our shell program
  *
+ * @argv: list of command line arguments
+ *
  * Return: nothing.
  */
 int user_mode(char **argv)
 {
 	size_t size = MAX_INPUT_SIZE;
 	cmd *head = NULL;
-	int i = 0, prompt_mode = 0, command_count = 1, exit_status = 0;
+	int i = 0, prompt_mode = 0, count = 1, exit_status = 0;
 	char *input = NULL, **paths = NULL, **lines = NULL, nl = '\n',
-	     *program_name = _strcat(argv[0], ": "), *empty = "_";
+	     *name = _strcat(argv[0], ": "), *empty = "_";
 	(void)argv;
 	while (1)
 	{
@@ -42,7 +47,7 @@ int user_mode(char **argv)
 		{
 			if (prompt_mode == 1)
 				write(STDOUT_FILENO, &nl, 1);
-			free_all(input, NULL, program_name, NULL, NULL);
+			free_all(input, NULL, name, NULL, NULL);
 			exit(exit_status);
 		}
 		if (check_empty(input) == -1)
@@ -54,11 +59,9 @@ int user_mode(char **argv)
 		for (i = 0; lines[i]; i++)
 		{
 			paths = get_paths();
-			if (paths == NULL)
-				paths = &empty;
+			paths = paths == NULL ? &empty : paths;
 			head = parser(lines[i]);
-			exit_status = executor(head, paths, program_name,
-					&command_count, &exit_status);
+			exit_status = executor(head, paths, name, &count, &exit_status);
 			free_cmdlist(head);
 			free(paths[0]);
 			free(paths);
@@ -71,30 +74,32 @@ int user_mode(char **argv)
  * file_mode - This is a none interactive mode
  * to execute files.
  *
+ * @argv: list of command line arguments
+ *
  * Return: nothing.
  */
 int file_mode(char **argv)
 {
-	int fd, j, command_count = 0, exit_status = 0;
+	int fd, j, count = 0, exit_status = 0;
 	size_t size = MAX_INPUT_SIZE;
 	cmd *head = NULL;
-	char *msg, *input, **paths, **lines, *program_name = _strcat(argv[0], ": "),
+	char *msg, *input, **paths, **lines, *name = _strcat(argv[0], ": "),
 	     *errmsg[15] = {NULL, NULL, ": ", "Can't open ", NULL, "\n", NULL};
 
-	errmsg[0] = program_name;
-	errmsg[1] = _itoa(command_count, 10);
+	errmsg[0] = name;
+	errmsg[1] = _itoa(count, 10);
 	errmsg[4] = argv[1];
 	msg = _strcat2(errmsg);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 	{
-		free_all(NULL, NULL, program_name, errmsg[1], NULL);
+		free_all(NULL, NULL, name, errmsg[1], NULL);
 		exit(handle_errors(msg, 127));
 	}
 	input = malloc(sizeof(char) * size);
 	if (input == NULL)
 	{
-		free_all(NULL, NULL, program_name, errmsg[1], NULL);
+		free_all(NULL, NULL, name, errmsg[1], NULL);
 		exit(handle_errors(NULL, 139));
 	}
 	if (read(fd, input, size))
@@ -106,20 +111,32 @@ int file_mode(char **argv)
 		{
 			paths = get_paths();
 			head = parser(lines[j]);
-			exit_status = executor(head, paths, program_name, &command_count, &exit_status);
+			exit_status = executor(head, paths, name, &count, &exit_status);
 			handle_free(NULL, head, paths);
 		}
 	}
-	free_all(input, lines, errmsg[1], program_name, msg);
+	free_all(input, lines, errmsg[1], name, msg);
 	close(fd);
 	return (0);
 }
 
-void free_all(char *input, char **lines, char *program_name, char *errmsg1, char *msg)
+
+/**
+ * free_all - function to free memory
+ *
+ * @input: pointer
+ * @lines: pointer
+ * @name: pointer
+ * @errmsg1: pointer
+ * @msg: pointer
+ *
+ * Return: nothing.
+ */
+void free_all(char *input, char **lines, char *name, char *errmsg1, char *msg)
 {
 	free(input);
 	free(lines);
-	free(program_name);
+	free(name);
 	free(errmsg1);
 	free(msg);
 }
