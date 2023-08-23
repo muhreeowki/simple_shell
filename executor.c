@@ -1,14 +1,13 @@
 #include "shell.h"
 
 /**
- * executor - function to handle execution of
- * all the commands in a list
- *
- * @head: pointer to a list of commands
- * @paths: list of all the paths in the PATH
- * environmental variable
- *
- * Return: nothing.
+ * executor - Executes a list of commands.
+ * @head: Pointer to command list.
+ * @paths: List of paths in PATH env variable.
+ * @name: Name of the program executing commands.
+ * @count: Pointer to command count.
+ * @exit_status: Pointer to exit status.
+ * Return: Exit status of the last command executed.
  */
 int executor(cmd *head, char **paths, char *name, int *count, int *exit_status)
 {
@@ -17,24 +16,20 @@ int executor(cmd *head, char **paths, char *name, int *count, int *exit_status)
 	cmd raw_command;
 	char *curr_sep = NULL, *prev_sep = NULL, *msg,
 	     *errmsg[15] = {NULL, NULL, ": ", NULL, ": not found\n", NULL};
-
 	errmsg[0] = name;
-
 	while (command != NULL)
 	{
 		prev_sep = curr_sep;
 		curr_sep = command->separator;
-
 		switch (check_sep(prev_sep, curr_status, prev_status))
 		{
 		case -1:
-			return(curr_status);
+			return (curr_status);
 		case 1:
 			command = command->next;
 			continue;
 		}
-
-		if (!find_program(command, paths)) /* Find the program */
+		if (!find_program(command, paths))
 		{
 			errmsg[1] = _itoa(*count, 10);
 			errmsg[3] = command->name;
@@ -44,16 +39,14 @@ int executor(cmd *head, char **paths, char *name, int *count, int *exit_status)
 			free(msg);
 			curr_status = 127;
 		}
-
 		if (command->builtin == 0) /* Execute a builtin */
 		{
 			raw_command = *command;
-			curr_status = raw_command.function(command->arguments, name, count, exit_status);
+			curr_status = raw_command.function(command->arguments,
+					name, count, exit_status);
 		}
-
 		if (command->builtin > 0) /* Execute Program via exec */
 			execute_command(command, &curr_status, &prev_status);
-
 		command = command->next;
 		(*count)++;
 	}
