@@ -56,11 +56,11 @@ int user_mode(char **argv)
 			continue;
 		}
 		lines = _strtok(input, '\n');
-		for (; lines[i]; i++)
+		while (lines[i])
 		{
 			paths = get_paths();
 			paths = paths == NULL ? &empty : paths;
-			head = parser(lines[i]);
+			head = parser(lines[i++]);
 			exit_status = executor(head, paths, name, &count, &exit_status);
 			free_cmdlist(head);
 			free(paths[0]);

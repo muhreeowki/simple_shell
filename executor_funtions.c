@@ -31,9 +31,9 @@ cmd *find_program(cmd *command, char **paths)
 	if (paths[0][0] == '_')
 		return (NULL);
 
-	for (; paths[i] != NULL; i++)
+	while (paths[i] != NULL)
 	{
-		patharray[0] = paths[i];
+		patharray[0] = paths[i++];
 		patharray[2] = command->name;
 		filepath = _strcat2(patharray);
 		if (stat(filepath, &st) == 0)

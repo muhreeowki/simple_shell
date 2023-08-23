@@ -127,7 +127,7 @@ char **_strtok(char *input, const char delim)
 		return (NULL);
 	}
 
-	for (; string[i]; i++)
+	while (string[i] != 0)
 	{
 		if (flag == 1)
 		{
@@ -135,7 +135,6 @@ char **_strtok(char *input, const char delim)
 			substring = (string + start);
 			flag = 0;
 		}
-
 		if (string[i] == delim)
 		{
 			if (flag == 1)
@@ -145,6 +144,7 @@ char **_strtok(char *input, const char delim)
 			if (string[i - 1] >= 32 && string[i - 1] < 127)
 				arguments_list[n++] = substring;
 		}
+		i++;
 	}
 
 	if (string[i - 1] >= 31 && string[i - 1] < 127)
