@@ -1,36 +1,42 @@
-==310852== Memcheck, a memory error detector
-==310852== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==310852== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==310852== Command: ./hsh
-==310852== Parent PID: 310559
-==310852== 
-==310852== Conditional jump or move depends on uninitialised value(s)
-==310852==    at 0x10C0C1: check_empty (utils_3.c:102)
-==310852==    by 0x10B285: user_mode (shell.c:48)
-==310852==    by 0x10B12D: main (shell.c:11)
-==310852== 
-==310852== Conditional jump or move depends on uninitialised value(s)
-==310852==    at 0x10B03A: count_tokens (parser_functions.c:168)
-==310852==    by 0x10AE94: _strtok (parser_functions.c:122)
-==310852==    by 0x10B2AC: user_mode (shell.c:53)
-==310852==    by 0x10B12D: main (shell.c:11)
-==310852== 
-==310852== Conditional jump or move depends on uninitialised value(s)
-==310852==    at 0x10AF95: _strtok (parser_functions.c:130)
-==310852==    by 0x10B2AC: user_mode (shell.c:53)
-==310852==    by 0x10B12D: main (shell.c:11)
-==310852== 
-==310852== Conditional jump or move depends on uninitialised value(s)
-==310852==    at 0x10B35F: user_mode (shell.c:54)
-==310852==    by 0x10B12D: main (shell.c:11)
-==310852== 
-==310852== 
-==310852== HEAP SUMMARY:
-==310852==     in use at exit: 0 bytes in 0 blocks
-==310852==   total heap usage: 35 allocs, 35 frees, 25,716 bytes allocated
-==310852== 
-==310852== All heap blocks were freed -- no leaks are possible
-==310852== 
-==310852== Use --track-origins=yes to see where uninitialised values come from
-==310852== For lists of detected and suppressed errors, rerun with: -s
-==310852== ERROR SUMMARY: 12 errors from 4 contexts (suppressed: 0 from 0)
+==316009== Memcheck, a memory error detector
+==316009== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==316009== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==316009== Command: ./hsh
+==316009== Parent PID: 310559
+==316009== 
+==316009== Conditional jump or move depends on uninitialised value(s)
+==316009==    at 0x10C11C: check_empty (utils_3.c:102)
+==316009==    by 0x10B2E9: user_mode (shell.c:53)
+==316009==    by 0x10B191: main (shell.c:14)
+==316009== 
+==316009== Conditional jump or move depends on uninitialised value(s)
+==316009==    at 0x10B09E: count_tokens (parser_functions.c:168)
+==316009==    by 0x10AEF8: _strtok (parser_functions.c:122)
+==316009==    by 0x10B310: user_mode (shell.c:58)
+==316009==    by 0x10B191: main (shell.c:14)
+==316009== 
+==316009== Conditional jump or move depends on uninitialised value(s)
+==316009==    at 0x10AFF9: _strtok (parser_functions.c:130)
+==316009==    by 0x10B310: user_mode (shell.c:58)
+==316009==    by 0x10B191: main (shell.c:14)
+==316009== 
+==316009== Conditional jump or move depends on uninitialised value(s)
+==316009==    at 0x10A497: find_program (executor_funtions.c:34)
+==316009==    by 0x10A106: executor (executor.c:32)
+==316009==    by 0x10B380: user_mode (shell.c:64)
+==316009==    by 0x10B191: main (shell.c:14)
+==316009== 
+==316009== Conditional jump or move depends on uninitialised value(s)
+==316009==    at 0x10B3C9: user_mode (shell.c:59)
+==316009==    by 0x10B191: main (shell.c:14)
+==316009== 
+==316009== 
+==316009== HEAP SUMMARY:
+==316009==     in use at exit: 0 bytes in 0 blocks
+==316009==   total heap usage: 31 allocs, 31 frees, 13,211 bytes allocated
+==316009== 
+==316009== All heap blocks were freed -- no leaks are possible
+==316009== 
+==316009== Use --track-origins=yes to see where uninitialised values come from
+==316009== For lists of detected and suppressed errors, rerun with: -s
+==316009== ERROR SUMMARY: 9 errors from 5 contexts (suppressed: 0 from 0)

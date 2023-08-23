@@ -94,9 +94,9 @@ char *_itoa(int num, int base)
  */
 int check_empty(char *string)
 {
-	int i, isempty = -1;
+	int i = 0, isempty = -1;
 
-	if (string == NULL || *string == '\0' || *string == '\n')
+	if (string == NULL)/* || *string == '\0' || *string == '\n')*/
 		return (-1);
 
 	for (i = 0; string[i] != '\0'; i++)
