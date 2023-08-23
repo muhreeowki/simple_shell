@@ -105,7 +105,7 @@ char **tokenize(char *input)
 char **_strtok(char *input, const char delim)
 {
 	int i = 0, count = 0, n = 0, flag = 1, start = 0;
-	char **arguments_list = NULL, *substring = NULL, *string = _strdup(input);
+	char **arguments_list = NULL, *substring = NULL, *string = input;
 	
 	count = count_tokens(string, delim);
 	arguments_list = malloc(sizeof(char *) * (count + 1));

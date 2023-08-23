@@ -46,6 +46,7 @@ int user_mode(char **argv)
 			if (prompt_mode == 1)
 				write(STDOUT_FILENO, &nl, 1);
 			free(input);
+			free(program_name);
 			exit(exit_status);
 		}
 
@@ -63,15 +64,13 @@ int user_mode(char **argv)
 				paths = &empty;
 			head = parser(lines[i]);
 			exit_status = executor(head, paths, program_name, &command_count, &exit_status);
-			if (paths[0][0] == '_')
-				handle_free(NULL, head, NULL);
-			else	
-				handle_free(NULL, head, paths);
+			free_cmdlist(head);
+			free(paths[0]);
+			free(paths);
 		}
 		free(lines);
 		free(input);
 	}
-	free(program_name);
 }
 
 /**
@@ -84,25 +83,32 @@ int file_mode(char **argv)
 {
 	int fd, j, command_count = 0, exit_status = 0;
 	size_t size = MAX_INPUT_SIZE;
-	char *input, **paths, **lines, *program_name = _strcat(argv[0], ": "), 
-	     *msg1, *msg2, *msg3, *msg4, *errmsg;
 	cmd *head = NULL;
+	char *msg, *input, **paths, **lines, *program_name = _strcat(argv[0], ": "),
+	     *errmsg[15] = {NULL, NULL, ": ", "Can't open ", NULL, "\n", NULL};
 
-	msg1 = _strcat(_itoa(command_count, 10), ": ");
-	msg2 = _strcat(program_name, msg1);
-	msg3 = _strcat(msg2, "Can't open ");
-	msg4 = _strcat(argv[1], "\n");
-	errmsg = _strcat(msg3, msg4);
+	errmsg[0] = program_name;
+	errmsg[1] = _itoa(command_count, 10);
+	errmsg[4] = argv[1];
+	msg = _strcat2(errmsg);
 
 	/* Open the file */
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		exit(handle_errors(errmsg, 127));
+	{
+		free(program_name);
+		free(errmsg[1]);
+		exit(handle_errors(msg, 127));
+	}
 
 	/* allocate memory */
 	input = malloc(sizeof(char) * size);
 	if (input == NULL)
+	{
+		free(program_name);
+		free(errmsg[1]);
 		exit(handle_errors(NULL, 139));
+	}
 
 	/* Read line by line and execute each command */
 	if (read(fd, input, size))
@@ -120,12 +126,9 @@ int file_mode(char **argv)
 		}
 	}
 
-	free(msg1);
-	free(msg2);
-	free(msg3);
-	free(msg4);
 	free(input);
 	free(lines);
+	free(errmsg[1]);
 	free(program_name);
 	close(fd);
 	return (0);

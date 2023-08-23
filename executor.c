@@ -15,7 +15,10 @@ int executor(cmd *head, char **paths, char *name, int *count, int *exit_status)
 	int curr_status = 0, prev_status = 0;
 	cmd *command = head;
 	cmd raw_command;
-	char *curr_sep = NULL, *prev_sep = NULL, *msg, *msg_pt1, *msg_pt2;
+	char *curr_sep = NULL, *prev_sep = NULL, *msg,
+	     *errmsg[15] = {NULL, NULL, ": ", NULL, ": not found\n", NULL};
+
+	errmsg[0] = name;
 
 	while (command != NULL)
 	{
@@ -33,10 +36,12 @@ int executor(cmd *head, char **paths, char *name, int *count, int *exit_status)
 
 		if (!find_program(command, paths)) /* Find the program */
 		{
-			msg_pt1 = _strcat(name, _strcat(_itoa(*count, 10), ": "));
-			msg_pt2 = _strcat(command->name, ": not found\n");
-			msg = _strcat(msg_pt1, msg_pt2);
+			errmsg[1] = _itoa(*count, 10);
+			errmsg[3] = command->name;
+			msg = _strcat2(errmsg);
+			free(errmsg[1]);
 			write(STDERR_FILENO, msg, _strlen(msg));
+			free(msg);
 			curr_status = 127;
 		}
 
@@ -46,7 +51,7 @@ int executor(cmd *head, char **paths, char *name, int *count, int *exit_status)
 			curr_status = raw_command.function(command->arguments, name, count, exit_status);
 		}
 
-		if (command->builtin == 1) /* Execute Program via exec */
+		if (command->builtin > 0) /* Execute Program via exec */
 			execute_command(command, &curr_status, &prev_status);
 
 		command = command->next;

@@ -15,9 +15,12 @@ void free_cmdlist(cmd *head)
 	if (ptr == NULL)
 		return;
 
+	free(ptr->arguments);
 	while (ptr)
 	{
 		next = ptr->next;
+		if (ptr->builtin == 2)
+			free(ptr->name);
 		free(ptr->separator);
 		free(ptr);
 		ptr = next;

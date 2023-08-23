@@ -12,8 +12,10 @@
 cmd *find_program(cmd *command, char **paths)
 {
 	int i;
-	char *filepath;
 	struct stat st;
+	char *filepath,
+	     *patharray[5] = {NULL, "/", NULL, NULL, NULL};
+
 	cmd builtins[] = {
 		{0, "cd", NULL, NULL, _cd, NULL}, {0, "env", NULL, NULL, _env, NULL},
 		{0, "setenv", NULL, NULL, _setenv, NULL},
@@ -45,14 +47,17 @@ cmd *find_program(cmd *command, char **paths)
 
 	for (i = 0; paths[i] != NULL; i++)
 	{
-		filepath = _strcat(paths[i], _strcat("/", command->name));
+		patharray[0] = paths[i];
+		patharray[2] = command->name;
+		filepath = _strcat2(patharray);
 
 		if (stat(filepath, &st) == 0)
 		{
 			command->name = filepath;
-			command->builtin = 1;
+			command->builtin = 2;
 			return (command);
 		}
+		free(filepath);
 	}
 	
 	return (NULL);
