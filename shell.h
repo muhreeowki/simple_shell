@@ -71,6 +71,7 @@ int handle_errors(char *message, int status);
 int count_tokens(char *input, char delim);
 int _strcmp(char *s1, char *s2);
 char *_strcat(char *s1, char *s2);
+char *_strcat2(char **strings);
 char *_strdup(char *str);
 int _strlen(const char *s);
 void remove_nl(char *input);

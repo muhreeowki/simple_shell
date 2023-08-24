@@ -63,13 +63,14 @@ int user_mode(char **argv)
 			paths = paths == NULL ? &empty : paths;
 			head = parser(lines[i++]);
 			exit_status = executor(head, paths, name, &count, &exit_status);
-			free_cmdlist(head);
 			free(paths[0]);
 			free(paths);
+			free_cmdlist(head);
 		}
-		free_all(input, lines, NULL, NULL, NULL);
+		free(input);
+		free(lines);
 	}
-	free(program_name);
+	free(name);
 }
 
 /**
@@ -84,8 +85,6 @@ int file_mode(char **argv)
 {
 	int fd, j, count = 0, exit_status = 0;
 	size_t size = MAX_INPUT_SIZE;
-	char *input, **paths, **lines, *program_name = _strcat(argv[0], ": "), 
-	     *msg1, *msg2, *msg3, *msg4, *errmsg;
 	cmd *head = NULL;
 	char *msg, *input, **paths, **lines, *name = _strcat(argv[0], ": "),
 	     *errmsg[15] = {NULL, NULL, ": ", "Can't open ", NULL, "\n", NULL};
