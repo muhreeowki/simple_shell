@@ -49,6 +49,7 @@ int user_mode(char **argv)
 			if (prompt_mode == 1)
 				write(STDOUT_FILENO, &nl, 1);
 			free(input);
+			free(name);
 			exit(exit_status);
 		}
 		if (check_empty(input) == -1)
@@ -70,6 +71,7 @@ int user_mode(char **argv)
 			}
 			free_cmdlist(head);
 		}
+		free(lines[0]);
 		free(lines);
 		free(input);
 	}

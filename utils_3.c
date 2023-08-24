@@ -94,16 +94,16 @@ char *_itoa(int num, int base)
  */
 int check_empty(char *string)
 {
-	int i = 0, isempty = -1;
+	int i = 0;
 
 	if (string == NULL)
 		return (-1);
 
-	for (; string[i] != '\0' && string[i] != '\n'; i++)
+	for (i = 0; string[i] != '\0' && string[i] != '\n'; i++)
 	{
 		if (string[i] > 32 && string[i] < 127)
-			isempty = 0;
+			return (0);
 	}
 
-	return (isempty);
+	return (-1);
 }
