@@ -14,9 +14,6 @@ int _strcmp(char *s1, char *s2)
 
 	i = j = len1 = len2 = 0;
 
-	if (s1 == NULL || s2 == NULL)
-		return (-1);
-
 	while (s1[len1] != '\0')
 		len1++;
 
@@ -120,6 +117,7 @@ char *_strcat(char *s1, char *s2)
 	return (newstr);
 }
 
+
 /**
  * _strdup - creates a duplicate of a string.
  *
@@ -129,8 +127,10 @@ char *_strcat(char *s1, char *s2)
  */
 char *_strdup(char *str)
 {
-	int i = 0, len = 0;
-	char *dupstr = NULL;
+	int i, len;
+	char *dupstr;
+
+	len = 0;
 
 	if (str == NULL)
 		return (NULL);

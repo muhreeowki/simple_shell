@@ -38,9 +38,9 @@ char *_getenv(char *var)
  */
 char **get_paths(void)
 {
-	char *path_string = NULL, **paths = NULL;
+	char *path_string, **paths = NULL;
 
-	path_string = _strdup(_getenv("PATH"));
+	path_string = _getenv("PATH");
 	if (path_string)
 		paths = _strtok(path_string, ':');
 

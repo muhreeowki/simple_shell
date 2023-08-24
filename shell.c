@@ -48,7 +48,7 @@ int user_mode(char **argv)
 		{
 			if (prompt_mode == 1)
 				write(STDOUT_FILENO, &nl, 1);
-			free_all(input, NULL, name, NULL, NULL);
+			free(input);
 			exit(exit_status);
 		}
 		if (check_empty(input) == -1)
@@ -69,6 +69,7 @@ int user_mode(char **argv)
 		}
 		free_all(input, lines, NULL, NULL, NULL);
 	}
+	free(program_name);
 }
 
 /**
@@ -83,6 +84,8 @@ int file_mode(char **argv)
 {
 	int fd, j, count = 0, exit_status = 0;
 	size_t size = MAX_INPUT_SIZE;
+	char *input, **paths, **lines, *program_name = _strcat(argv[0], ": "), 
+	     *msg1, *msg2, *msg3, *msg4, *errmsg;
 	cmd *head = NULL;
 	char *msg, *input, **paths, **lines, *name = _strcat(argv[0], ": "),
 	     *errmsg[15] = {NULL, NULL, ": ", "Can't open ", NULL, "\n", NULL};

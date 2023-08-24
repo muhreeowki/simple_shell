@@ -78,7 +78,6 @@ int check_empty(char *string);
 int _atoi(char *s);
 char *_itoa(int num, int base);
 void reverse(char *string, int len);
-char *_strcat2(char **strings);
 
 /* memory management */
 void free_cmdlist(cmd *head);

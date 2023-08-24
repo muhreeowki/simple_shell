@@ -12,6 +12,8 @@
 
 int _cd(char **args, char *name, int *count, int *status)
 {
+	char *oldcwd, *newcwd, *msg1, *msg2, *errmsg;
+	char newline = '\n';
 	DIR *dir;
 	char *oldcwd, *newcwd, *msg, newline = '\n',
 	     *errmsg[15] = {NULL, NULL, ": ", "cd: can't cd to ", NULL, "\n", NULL};
@@ -68,6 +70,7 @@ int _setenv(char **args, char *name, int *count, int *status)
 {
 	int i;
 	int num_vars = 0;
+<<<<<<< HEAD
 	char **new_environ, *new_env, *msg, *errmsg[6] = {NULL, NULL, ": ",
 		     "Usage: setenv VARIABLE VALUE \n", NULL},
 	     *array[4] = {NULL, "=", NULL, NULL};
@@ -85,8 +88,8 @@ int _setenv(char **args, char *name, int *count, int *status)
 	for (i = 0; environ[i] != NULL; i++)
 		if (_getenv(args[1]))
 		{
+			new_env = _strcat(_strcat(args[1], "="), args[2]);
 			environ[i] = new_env;
-			free(msg);
 			return (0);
 		}
 	while (environ[num_vars])
@@ -102,7 +105,6 @@ int _setenv(char **args, char *name, int *count, int *status)
 	new_environ[i++] = new_env;
 	new_environ[i] = NULL;
 	environ = new_environ;
-	free(msg);
 	return (0);
 }
 
@@ -128,6 +130,9 @@ int _unsetenv(char **args, char *name, int *count, int *status)
 	msg = _strcat2(errmsg);
 	free(errmsg[1]);
 	(void)status;
+	msg1 = _strcat(name, _strcat(_itoa(*count, 10), ": "));
+	msg2 = "Usage: unsetenv VARIABLE VALUE \n";
+	errmsg = _strcat(msg1, msg2);
 
 	if (args[1] == NULL)
 		return (handle_errors(msg, 2));
@@ -135,9 +140,7 @@ int _unsetenv(char **args, char *name, int *count, int *status)
 	var_val = _getenv(args[1]);
 	if (var_val)
 	{
-		array[0] = args[1];
-		array[2] = var_val;
-		whole_var = _strcat2(array);
+		whole_var = _strcat(_strcat(args[1], "="), var_val);
 		for (i = 0; environ[i] != NULL; i++)
 		{
 			if (_strcmp(environ[i], whole_var) == 0)
@@ -171,16 +174,15 @@ int _unsetenv(char **args, char *name, int *count, int *status)
  */
 int _exit2(char **args, char *name, int *count, int *status)
 {
+	char *msg1, *msg2, *errmsg;
 	int user_status;
 	char *msg, *errmsg[15] = { NULL, NULL, ": ",
 		"exit: Illegal number: ", NULL, "\n", NULL};
 
 	/* Error msg */
-	errmsg[0] = name;
-	errmsg[1] = _itoa(*count, 10);
-	errmsg[4] = args[1];
-	msg = _strcat2(errmsg);
-	free(errmsg[1]);
+	msg1 = _strcat(name, _strcat(_itoa(*count, 10), ": "));
+	msg2 = _strcat("exit: Illegal number: ", _strcat(args[1], "\n"));
+	errmsg = _strcat(msg1, msg2);
 
 	if (args[1] != NULL)
 	{
@@ -189,7 +191,6 @@ int _exit2(char **args, char *name, int *count, int *status)
 			return (handle_errors(msg, 2));
 		exit(user_status);
 	}
-	free(msg);
 	exit(*status);
 }
 
@@ -205,7 +206,7 @@ int _exit2(char **args, char *name, int *count, int *status)
  */
 int _env(char **args, char *name, int *count, int *status)
 {
-	char *string = NULL;
+	char *string;
 	int i;
 	(void)args;
 	(void)name;

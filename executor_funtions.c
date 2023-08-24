@@ -39,10 +39,9 @@ cmd *find_program(cmd *command, char **paths)
 		if (stat(filepath, &st) == 0)
 		{
 			command->name = filepath;
-			command->builtin = 2;
+			command->builtin = 1;
 			return (command);
 		}
-		free(filepath);
 	}
 	return (NULL);
 }

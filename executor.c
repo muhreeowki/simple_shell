@@ -31,12 +31,10 @@ int executor(cmd *head, char **paths, char *name, int *count, int *exit_status)
 		}
 		if (!find_program(command, paths))
 		{
-			errmsg[1] = _itoa(*count, 10);
-			errmsg[3] = command->name;
-			msg = _strcat2(errmsg);
-			free(errmsg[1]);
+			msg_pt1 = _strcat(name, _strcat(_itoa(*count, 10), ": "));
+			msg_pt2 = _strcat(command->name, ": not found\n");
+			msg = _strcat(msg_pt1, msg_pt2);
 			write(STDERR_FILENO, msg, _strlen(msg));
-			free(msg);
 			curr_status = 127;
 		}
 		if (command->builtin == 0) /* Execute a builtin */
