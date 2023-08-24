@@ -117,7 +117,7 @@ int divide_sep(char *string, char **arguments_list,
 char **_strtok(char *input, const char delim)
 {
 	int i = 0, count = 0, n = 0, flag = 1, start = 0;
-	char **arguments_list = NULL, *substring = NULL, *string = input;
+	char **arguments_list = NULL, *substring = NULL, *string = _strdup(input);
 
 	/*string = input;*/
 	count = count_tokens(string, delim);

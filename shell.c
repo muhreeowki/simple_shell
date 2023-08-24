@@ -63,12 +63,15 @@ int user_mode(char **argv)
 			paths = paths == NULL ? &empty : paths;
 			head = parser(lines[i++]);
 			exit_status = executor(head, paths, name, &count, &exit_status);
-			free(paths[0]);
-			free(paths);
+			if (paths[0][0] != '_')
+			{
+				free(paths[0]);
+				free(paths);
+			}
 			free_cmdlist(head);
 		}
-		free(input);
 		free(lines);
+		free(input);
 	}
 	free(name);
 }
