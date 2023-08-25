@@ -36,6 +36,8 @@ char **tokenize(char *input)
 				start = i;
 				substring = (string + start);
 			}
+			if ((string[i] == ' ' || string[i] == ';' || string[i] == '&' || string[i] == '|') && i == 0)
+				flag = 1;
 		}
 
 		if (flag == 1)
@@ -119,7 +121,6 @@ char **_strtok(char *input, const char delim)
 	int i = 0, count = 0, n = 0, flag = 1, start = 0;
 	char **arguments_list = NULL, *substring = NULL, *string = _strdup(input);
 
-	/*string = input;*/
 	count = count_tokens(string, delim);
 	arguments_list = malloc(sizeof(char *) * (count + 1));
 	if (arguments_list == NULL)
@@ -137,7 +138,7 @@ char **_strtok(char *input, const char delim)
 			substring = (string + start);
 			flag = 0;
 		}
-		if (string[i] == delim)
+		if (string[i] == delim && i != 0)
 		{
 			if (flag == 1)
 				continue;

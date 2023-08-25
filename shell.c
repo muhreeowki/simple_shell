@@ -37,10 +37,10 @@ int user_mode(char **argv)
 	(void)argv;
 	while (1)
 	{
-		input = malloc(sizeof(char) * size);
+		input = malloc(sizeof(char) * size + 1);
 		if (input == NULL)
 			continue;
-		memset(input, 0, size);
+		memset(input, 0, size+1);
 		prompt_mode = isatty(STDIN_FILENO);
 		if (prompt_mode == 1)
 			write(STDOUT_FILENO, "($) ", 4); /* Prompt */
@@ -58,11 +58,11 @@ int user_mode(char **argv)
 			continue;
 		}
 		lines = _strtok(input, nl);
-		while (lines[i])
+		for (i = 0; lines[i]; i++)
 		{
 			paths = get_paths();
 			paths = paths == NULL ? &empty : paths;
-			head = parser(lines[i++]);
+			head = parser(lines[i]);
 			exit_status = executor(head, paths, name, &count, &exit_status);
 			if (paths[0][0] != '_')
 			{

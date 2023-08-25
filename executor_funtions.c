@@ -18,8 +18,7 @@ cmd *find_program(cmd *command, char **paths)
 	if (check_builtins(command) == 0)
 		return (command);
 
-	if (command->name[0] == '/' ||
-			(command->name[0] == '.' && command->name[1] == '/'))
+	if (command->name[0] == '/' || command->name[0] == '.')
 	{
 		if (stat(command->name, &st) == 0)
 		{
@@ -39,9 +38,10 @@ cmd *find_program(cmd *command, char **paths)
 		if (stat(filepath, &st) == 0)
 		{
 			command->name = filepath;
-			command->builtin = 1;
+			command->builtin = 2;
 			return (command);
 		}
+		free(filepath);
 	}
 	return (NULL);
 }

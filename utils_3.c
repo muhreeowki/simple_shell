@@ -99,7 +99,7 @@ int check_empty(char *string)
 	if (string == NULL)
 		return (-1);
 
-	for (i = 0; string[i] != '\0' && string[i] != '\n'; i++)
+	for (i = 0; string[i] != 0 && string[i] != '\n'; i++)
 	{
 		if (string[i] > 32 && string[i] < 127)
 			return (0);
